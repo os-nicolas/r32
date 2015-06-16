@@ -1,0 +1,47 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ff000000"
+    android:orientation="vertical"
+    tools:context="cube.d.four.r4.Free">
+
+    <cube.d.n.r42.r4.MainView android:id="@+id/free_cube" android:layout_width="fill_parent"
+        android:layout_height="0dp" android:layout_weight="1" />
+
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="100dp"
+        android:layout_marginBottom="-16dp" android:layout_marginLeft="-16dp" android:layout_marginRight="-16dp"
+        android:background="#000000" android:orientation="horizontal"
+        android:paddingBottom="24dp" android:paddingLeft="24dp"
+        android:paddingRight="24dp" android:paddingTop="16dp">
+
+        <!--app:rippleColor="#666666"-->
+        <!--app:buttonColor="#000000"-->
+
+
+        <com.xgc1986.ripplebutton.widget.RippleButton
+            android:id="@+id/free_scrable"
+            android:textColor="#000000"
+            app:rippleColor="#bbbbbb"
+            app:buttonColor="#ffffff"
+            android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1"
+            android:text="Scramble" />
+
+        <com.xgc1986.ripplebutton.widget.RippleButton  android:id="@+id/free_reset"
+            android:textColor="#000000"
+            app:rippleColor="#bbbbbb"
+            app:buttonColor="#ffffff"
+            android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1"
+            android:text="Reset" />
+
+        <!--<Button android:id="@+id/free_scrable" style="?android:attr/buttonStyleSmall"-->
+            <!--android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1"-->
+            <!--android:text="Scramble" />-->
+
+        <!--<Button android:id="@+id/free_reset" style="?android:attr/buttonStyleSmall"-->
+            <!--android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1"-->
+            <!--android:text="Reset" />-->
+    </LinearLayout>
+
+</LinearLayout>

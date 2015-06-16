@@ -1,0 +1,84 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ff000000">
+
+    <cube.d.n.r42.r4.MainView android:id="@+id/main_bkg_cube" android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+    <LinearLayout android:layout_width="250dp" android:layout_height="fill_parent"
+        android:layout_gravity="right" android:orientation="vertical"
+        android:paddingBottom="8dp" android:paddingLeft="8dp" android:paddingRight="8dp"
+        android:paddingTop="8dp"
+
+        android:background="@drawable/background_with_shadow">
+
+        <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+            android:layout_gravity="center" android:orientation="vertical"
+            android:gravity="center_horizontal|center_vertical"
+            >
+
+        <TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="Home"
+            android:textColor="#ffffff" android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <!--<com.xgc1986.ripplebutton.widget.RippleButton  android:id="@+id/free_reset"-->
+                <!--android:textColor="#000000"-->
+                <!--android:textSize="20dp"-->
+                <!--app:rippleColor="#bbbbbb"-->
+                <!--app:buttonColor="#ffffff"-->
+                <!--android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1"-->
+                <!--android:text="Reset" />-->
+
+
+            <com.xgc1986.ripplebutton.widget.RippleButton android:id="@+id/button_challenges" android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Challenges"
+                app:rippleColor="#bbbbbb"
+                app:buttonColor="#ffffff"
+                android:textColor="#000000"
+                />
+
+            <com.xgc1986.ripplebutton.widget.RippleButton android:id="@+id/button_free_2" android:layout_width="fill_parent"
+                android:layout_height="wrap_content"  android:text="2x2"
+                app:rippleColor="#bbbbbb"
+                app:buttonColor="#ffffff"
+                android:textColor="#000000"/>
+
+            <com.xgc1986.ripplebutton.widget.RippleButton android:id="@+id/button_free_3" android:layout_width="fill_parent"
+                android:layout_height="wrap_content" android:text="3x3"
+                app:rippleColor="#bbbbbb"
+                app:buttonColor="#ffffff"
+                android:textColor="#000000"/>
+
+            <com.xgc1986.ripplebutton.widget.RippleButton android:id="@+id/button_tutorial" android:layout_width="fill_parent"
+                android:layout_height="wrap_content"  android:text="Help!!"
+                app:rippleColor="#bbbbbb"
+                app:buttonColor="#ffffff"
+                android:textColor="#000000"/>
+
+        <!--<Button android:id="@+id/button_challenges" android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Challenges" />-->
+
+        <!--<Button android:id="@+id/button_free_2" android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"  android:text="2x2" />-->
+
+        <!--<Button android:id="@+id/button_free_3" android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content" android:text="3x3" />-->
+
+        <!--<Button android:id="@+id/button_tutorial" android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"  android:text="Help!!" />-->
+
+        </LinearLayout>
+
+        <!--<Button-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
+        <!--android:text="About hypercubes"-->
+        <!--android:id="@+id/button_about" />-->
+    </LinearLayout>
+</FrameLayout>
