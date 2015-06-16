@@ -330,19 +330,19 @@ public class Side {
         int i = (int) Math.floor(offset);
         int j = (int) Math.ceil(offset);
 
-        boolean hasTopLeft = owner.topLeft();
 
-        Cube.Positions from = owner.getPosMoveX(pos, i, hasTopLeft);
-        Cube.Positions to = owner.getPosMoveX(pos, j, hasTopLeft);
+
+        Cube.Positions from = owner.getPosMoveX(pos, i);
+        Cube.Positions to = owner.getPosMoveX(pos, j);
 
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
                 int myX = x;
                 if (owner.isSpinningX(y)) {
-                    if ((from == Cube.Positions.LEFT_B || from == Cube.Positions.LEFT_T) && (to == Cube.Positions.OUTSIDE)) {
+                    if (from == Cube.Positions.LEFT && (to == Cube.Positions.OUTSIDE)) {
                         myX = size - 1 - myX;
                     }
-                    if ((to == Cube.Positions.LEFT_B || to == Cube.Positions.LEFT_T) && (from == Cube.Positions.OUTSIDE)) {
+                    if (to == Cube.Positions.LEFT && (from == Cube.Positions.OUTSIDE)) {
                         myX = size - 1 - myX;
                     }
                 }
@@ -364,19 +364,17 @@ public class Side {
         int i = (int) Math.floor(offset);
         int j = (int) Math.ceil(offset);
 
-        boolean hasTopLeft = owner.topLeft();
-
-        Cube.Positions from = owner.getPosMoveY(pos, i, hasTopLeft);
-        Cube.Positions to = owner.getPosMoveY(pos, j, hasTopLeft);
+        Cube.Positions from = owner.getPosMoveY(pos, i);
+        Cube.Positions to = owner.getPosMoveY(pos, j);
 
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
                 int myY = y;
                 if (owner.isSpinningY(x)) {
-                    if ((from == Cube.Positions.TOP_R || from == Cube.Positions.TOP_L) && (to == Cube.Positions.OUTSIDE)) {
+                    if (from == Cube.Positions.TOP &&  to == Cube.Positions.OUTSIDE) {
                         myY = size - 1 - y;
                     }
-                    if ((to == Cube.Positions.TOP_R || to == Cube.Positions.TOP_L) && (from == Cube.Positions.OUTSIDE)) {
+                    if (to == Cube.Positions.TOP && from == Cube.Positions.OUTSIDE) {
                         myY = size - 1 - y;
                     }
                 }
@@ -447,9 +445,7 @@ public class Side {
 
         int i = (int) Math.floor(offset);
         int j = (int) Math.ceil(offset);
-        float p = 1 - (offset - i);
 
-        boolean hasTopLeft = owner.topLeft();
 
         Cube.Positions from;
         Cube.Positions to;
@@ -457,8 +453,8 @@ public class Side {
         int rotatedY = yIndex;
         int rotations;
         if (owner.movingX()) {
-            from = owner.getPosMoveX(current, i, hasTopLeft);
-            to = owner.getPosMoveX(current, j, hasTopLeft);
+            from = owner.getPosMoveX(current, i);
+            to = owner.getPosMoveX(current, j);
             rotations = owner.getRotationsX(current, from);
             rotatedX = Side.rotateX(xIndex, yIndex, rotations, size);
             rotatedY = Side.rotateY(xIndex, yIndex, rotations, size);
@@ -467,15 +463,15 @@ public class Side {
                 rotatedY = size - 1 - yIndex;
             }
 
-            if(((from == Cube.Positions.LEFT_B || from == Cube.Positions.LEFT_T) && to == Cube.Positions.OUTSIDE)
-            ||((to == Cube.Positions.LEFT_B || to == Cube.Positions.LEFT_T) && from == Cube.Positions.OUTSIDE)){
+            if((from == Cube.Positions.LEFT && to == Cube.Positions.OUTSIDE)
+            ||(to == Cube.Positions.LEFT && from == Cube.Positions.OUTSIDE)){
                 rotatedX = size - 1 - rotatedX;
             }
 
 
         } else if (owner.movingY()) {
-            from = owner.getPosMoveY(current, i, hasTopLeft);
-            to = owner.getPosMoveY(current, j, hasTopLeft);
+            from = owner.getPosMoveY(current, i);
+            to = owner.getPosMoveY(current, j);
             rotations = owner.getRotationsY(current, from);
             rotatedX = Side.rotateX(xIndex, yIndex, rotations, size);
             rotatedY = Side.rotateY(xIndex, yIndex, rotations, size);
@@ -484,8 +480,8 @@ public class Side {
                 rotatedY = yIndex;
             }
 
-            if(((from == Cube.Positions.TOP_L || from == Cube.Positions.TOP_R) && to == Cube.Positions.OUTSIDE)
-                    ||((to == Cube.Positions.TOP_L || to == Cube.Positions.TOP_R) && from == Cube.Positions.OUTSIDE)){
+            if((from == Cube.Positions.TOP && to == Cube.Positions.OUTSIDE)
+                    ||(to == Cube.Positions.TOP && from == Cube.Positions.OUTSIDE)){
                 rotatedY = size - 1 - rotatedY;
             }
 

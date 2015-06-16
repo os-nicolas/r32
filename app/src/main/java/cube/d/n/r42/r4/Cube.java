@@ -46,16 +46,10 @@ public class Cube {
         lastScrollY = new boolean[size];
 
         sides[0] = new Side(0, Positions.CENTER, size, this);
-        sides[1] = new Side(1, Positions.CENTER_LEFT_T, size, this);
-        sides[2] = new Side(2, Positions.LEFT_T, size, this);
-        sides[3] = new Side(3, Positions.CENTER_RIGHT_B, size, this);
-        sides[4] = new Side(4, Positions.RIGHT_B, size, this);
-        sides[5] = new Side(5, Positions.CENTER_TOP_L, size, this);
-        sides[6] = new Side(6, Positions.TOP_L, size, this);
-        sides[7] = new Side(7, Positions.CENTER_BOT_R, size, this);
-        sides[8] = new Side(8, Positions.BOT_R, size, this);
-        sides[9] = new Side(9, Positions.TOP_LEFT, size, this);
-        sides[10] = new Side(10, Positions.BOT_RIGHT, size, this);
+        sides[1] = new Side(1, Positions.TOP, size, this);
+        sides[2] = new Side(2, Positions.LEFT, size, this);
+        sides[3] = new Side(3, Positions.RIGHT, size, this);
+        sides[4] = new Side(4, Positions.BOT, size, this);
         sides[11] = new Side(11, Positions.OUTSIDE, size, this);
 
     }
@@ -291,23 +285,13 @@ public class Cube {
             if (inX(s.pos)
                     ) {
                 s.drawX(base, offset, scroll);
-            } else if (s.pos == Positions.TOP_L ||
-                    s.pos == Positions.TOP_R ||
-                    s.pos == Positions.CENTER_TOP_L ||
-                    s.pos == Positions.CENTER_TOP_R ||
-                    s.pos == Positions.TOP_LEFT ||
-                    s.pos == Positions.TOP_RIGHT) {
+            } else if (s.pos == Positions.TOP) {
                 if (scroll[0]) {
                     s.draw(base, offset);
                 } else {
                     s.draw(base, 0f);
                 }
-            } else if (s.pos == Positions.BOT_L ||
-                    s.pos == Positions.BOT_R ||
-                    s.pos == Positions.CENTER_BOT_L ||
-                    s.pos == Positions.CENTER_BOT_R ||
-                    s.pos == Positions.BOT_LEFT ||
-                    s.pos == Positions.BOT_RIGHT) {
+            } else if (s.pos == Positions.BOT) {
                 if (scroll[size - 1]) {
                     s.draw(base, offset);
                 } else {
@@ -413,20 +397,18 @@ public class Cube {
         int j = (int) Math.ceil(offset);
         float p = 1 - (offset - i);
 
-        boolean hasTopLeft = topLeft();
-
         Positions from;
         Positions to;
         if (movingX()) {
-            from = getPosMoveX(current, i, hasTopLeft);
-            to = getPosMoveX(current, j, hasTopLeft);
+            from = getPosMoveX(current, i);
+            to = getPosMoveX(current, j);
         } else if (movingY()) {
-            from = getPosMoveY(current, i, hasTopLeft);
-            to = getPosMoveY(current, j, hasTopLeft);
+            from = getPosMoveY(current, i);
+            to = getPosMoveY(current, j);
 
         } else {
-            from = getPosMoveY(current, i, hasTopLeft);
-            to = getPosMoveY(current, j, hasTopLeft);
+            from = getPosMoveY(current, i);
+            to = getPosMoveY(current, j);
         }
 
         //int rotations = getRotations(current,from);
@@ -475,25 +457,10 @@ public class Cube {
     }
 
     private boolean clockwise(Positions from, Positions to) {
-        return (from == Positions.CENTER_TOP_R && to == Positions.CENTER_TOP_L) ||
-                (from == Positions.TOP_RIGHT && to == Positions.TOP_L) ||
-                (from == Positions.TOP_L && to == Positions.TOP_R) ||
-                (from == Positions.TOP_R && to == Positions.TOP_LEFT) ||
-
-                (from == Positions.CENTER_LEFT_T && to == Positions.CENTER_LEFT_B) ||
-                (from == Positions.TOP_LEFT && to == Positions.LEFT_B) ||
-                (from == Positions.LEFT_B && to == Positions.LEFT_T) ||
-                (from == Positions.LEFT_T && to == Positions.BOT_LEFT) ||
-
-                (from == Positions.CENTER_BOT_L && to == Positions.CENTER_BOT_R) ||
-                (from == Positions.BOT_LEFT && to == Positions.BOT_R) ||
-                (from == Positions.BOT_R && to == Positions.BOT_L) ||
-                (from == Positions.BOT_L && to == Positions.BOT_RIGHT) ||
-
-                (from == Positions.CENTER_RIGHT_B && to == Positions.CENTER_RIGHT_T) ||
-                (from == Positions.BOT_RIGHT && to == Positions.RIGHT_T) ||
-                (from == Positions.RIGHT_T && to == Positions.RIGHT_B) ||
-                (from == Positions.RIGHT_B && to == Positions.TOP_RIGHT);
+        return ((to == Positions.OUTSIDE) && from == Positions.LEFT ||
+                (to == Positions.LEFT && from == Positions.CENTER) ||
+                (to == Positions.CENTER && from == Positions.RIGHT) ||
+                (to == Positions.RIGHT && from == Positions.OUTSIDE));
     }
 
     //TODO this is a bit depricated
@@ -504,20 +471,19 @@ public class Cube {
         int j = (int) Math.ceil(offset);
         float p = 1 - (offset - i);
 
-        boolean hasTopLeft = topLeft();
 
         Positions from;
         Positions to;
         if (movingX()) {
-            from = getPosMoveX(center, i, hasTopLeft);
-            to = getPosMoveX(center, j, hasTopLeft);
+            from = getPosMoveX(center, i);
+            to = getPosMoveX(center, j);
         } else if (movingY()) {
-            from = getPosMoveY(center, i, hasTopLeft);
-            to = getPosMoveY(center, j, hasTopLeft);
+            from = getPosMoveY(center, i);
+            to = getPosMoveY(center, j);
 
         } else {
-            from = getPosMoveY(center, i, hasTopLeft);
-            to = getPosMoveY(center, j, hasTopLeft);
+            from = getPosMoveY(center, i);
+            to = getPosMoveY(center, j);
         }
 
         if (clockwise(from, to)
@@ -562,25 +528,10 @@ public class Cube {
     }
 
     private boolean counterClockwise(Positions from, Positions to) {
-        return (from == Positions.CENTER_TOP_L) && to == Positions.CENTER_TOP_R ||
-                (from == Positions.TOP_L && to == Positions.TOP_RIGHT) ||
-                (from == Positions.TOP_R && to == Positions.TOP_L) ||
-                (from == Positions.TOP_LEFT && to == Positions.TOP_R) ||
-
-                (from == Positions.CENTER_LEFT_B && to == Positions.CENTER_LEFT_T) ||
-                (from == Positions.LEFT_B && to == Positions.TOP_LEFT) ||
-                (from == Positions.LEFT_T && to == Positions.LEFT_B) ||
-                (from == Positions.BOT_LEFT && to == Positions.LEFT_T) ||
-
-                (from == Positions.CENTER_BOT_R && to == Positions.CENTER_BOT_L) ||
-                (from == Positions.BOT_R && to == Positions.BOT_LEFT) ||
-                (from == Positions.BOT_L && to == Positions.BOT_R) ||
-                (from == Positions.BOT_RIGHT && to == Positions.BOT_L) ||
-
-                (from == Positions.CENTER_RIGHT_T && to == Positions.CENTER_RIGHT_B) ||
-                (from == Positions.RIGHT_T && to == Positions.BOT_RIGHT) ||
-                (from == Positions.RIGHT_B && to == Positions.RIGHT_T) ||
-                (from == Positions.TOP_RIGHT && to == Positions.RIGHT_B);
+        return (from == Positions.OUTSIDE) && to == Positions.LEFT ||
+                (from == Positions.LEFT && to == Positions.CENTER) ||
+                (from == Positions.CENTER && to == Positions.RIGHT) ||
+                (from == Positions.RIGHT && to == Positions.OUTSIDE);
     }
 
     public boolean movingX() {
@@ -661,25 +612,17 @@ public class Cube {
         return result;
     }
 
-    public Positions getPosMoveX(Positions current, int offset, boolean hasTopLeft) {
+    public Positions getPosMoveX(Positions current, int offset) {
 
 //        while (offset <0){
 //            offset += 6;
 //        }
 
         ArrayList<Positions[]> lists = new ArrayList<Positions[]>();
-        Positions[] centerList1 = {Positions.LEFT_T, Positions.CENTER_LEFT_B, Positions.CENTER, Positions.CENTER_RIGHT_T, Positions.RIGHT_B, Positions.OUTSIDE};
+        Positions[] centerList1 = {Positions.LEFT, Positions.CENTER, Positions.RIGHT, Positions.OUTSIDE};
         lists.add(centerList1);
-        Positions[] centerList2 = {Positions.LEFT_B, Positions.CENTER_LEFT_T, Positions.CENTER, Positions.CENTER_RIGHT_B, Positions.RIGHT_T, Positions.OUTSIDE};
-        lists.add(centerList2);
-        Positions[] topList = {Positions.TOP_R, Positions.TOP_LEFT, Positions.CENTER_TOP_R, Positions.CENTER_TOP_L, Positions.TOP_RIGHT, Positions.TOP_L};
-        lists.add(topList);
-        Positions[] botList = {Positions.BOT_R, Positions.BOT_LEFT, Positions.CENTER_BOT_R, Positions.CENTER_BOT_L, Positions.BOT_RIGHT, Positions.BOT_L};
-        lists.add(botList);
-
 
         if (current == Positions.CENTER || current == Positions.OUTSIDE) {
-            if (hasTopLeft == (current == Positions.CENTER)) {
                 for (int i = 0; i < centerList1.length; i++) {
                     if (current == centerList1[i]) {
                         //we found it
@@ -687,15 +630,7 @@ public class Cube {
                         return centerList1[(i + offset + centerList1.length * 3) % centerList1.length];
                     }
                 }
-            } else {
-                for (int i = 0; i < centerList2.length; i++) {
-                    if (current == centerList2[i]) {
-                        //we found it
-                        return centerList2[(i + offset + centerList2.length * 3) % centerList2.length];
-                    }
-                }
             }
-        }
 
         for (Positions[] list : lists) {
             for (int i = 0; i < list.length; i++) {
@@ -711,47 +646,24 @@ public class Cube {
         return null;
     }
 
-    public boolean topLeft() {
-        for (int i = 0; i < sides.length; i++) {
-            if (sides[i].pos == Positions.TOP_LEFT) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Positions getPosMoveY(Positions current, int offset, boolean hasTopLeft) {
+    public Positions getPosMoveY(Positions current, int offset) {
 
 //        while (offset <0){
 //            offset += 6;
 //        }
 
         ArrayList<Positions[]> lists = new ArrayList<Positions[]>();
-        Positions[] centerList2 = {Positions.TOP_R, Positions.CENTER_TOP_L, Positions.CENTER, Positions.CENTER_BOT_R, Positions.BOT_L, Positions.OUTSIDE};
-        lists.add(centerList2);
-        Positions[] centerList1 = {Positions.TOP_L, Positions.CENTER_TOP_R, Positions.CENTER, Positions.CENTER_BOT_L, Positions.BOT_R, Positions.OUTSIDE};
+        Positions[] centerList1 = {Positions.TOP, Positions.CENTER, Positions.BOT, Positions.OUTSIDE};
         lists.add(centerList1);
-        Positions[] leftList = {Positions.LEFT_B, Positions.TOP_LEFT, Positions.CENTER_LEFT_B, Positions.CENTER_LEFT_T, Positions.BOT_LEFT, Positions.LEFT_T};
-        lists.add(leftList);
-        Positions[] rightList = {Positions.RIGHT_B, Positions.TOP_RIGHT, Positions.CENTER_RIGHT_B, Positions.CENTER_RIGHT_T, Positions.BOT_RIGHT, Positions.RIGHT_T};
-        lists.add(rightList);
+
 
         if (current == Positions.CENTER || current == Positions.OUTSIDE) {
-            if (hasTopLeft == (current == Positions.CENTER)) {
                 for (int i = 0; i < centerList1.length; i++) {
                     if (current == centerList1[i]) {
                         //we found it
                         return centerList1[(i + offset + centerList1.length * 3) % centerList1.length];
                     }
                 }
-            } else {
-                for (int i = 0; i < centerList2.length; i++) {
-                    if (current == centerList2[i]) {
-                        //we found it
-                        return centerList2[(i + offset + centerList2.length * 3) % centerList2.length];
-                    }
-                }
-            }
         }
 
         for (Positions[] list : lists) {
@@ -882,27 +794,15 @@ public class Cube {
 
     private boolean inX(Positions pos) {
         return pos == Positions.CENTER ||
-                pos == Positions.LEFT_T ||
-                pos == Positions.LEFT_B ||
-                pos == Positions.CENTER_LEFT_T ||
-                pos == Positions.CENTER_LEFT_B ||
-                pos == Positions.RIGHT_T ||
-                pos == Positions.RIGHT_B ||
-                pos == Positions.CENTER_RIGHT_T ||
-                pos == Positions.CENTER_RIGHT_B ||
+                pos == Positions.LEFT ||
+                pos == Positions.RIGHT ||
                 pos == Positions.OUTSIDE;
     }
 
     private boolean inY(Positions pos) {
         return pos == Positions.CENTER ||
-                pos == Positions.BOT_R ||
-                pos == Positions.BOT_L ||
-                pos == Positions.CENTER_BOT_L ||
-                pos == Positions.CENTER_BOT_R ||
-                pos == Positions.TOP_R ||
-                pos == Positions.TOP_L ||
-                pos == Positions.CENTER_TOP_L ||
-                pos == Positions.CENTER_TOP_R ||
+                pos == Positions.TOP ||
+                pos == Positions.BOT ||
                 pos == Positions.OUTSIDE;
     }
 
@@ -914,163 +814,32 @@ public class Cube {
             result.topr = new MyPoint(2f / 3f, 1f / 3f);
             result.botl = new MyPoint(1f / 3f, 2f / 3f);
             result.botr = new MyPoint(2f / 3f, 2f / 3f);
-        } else if (pos == Positions.CENTER_LEFT_T) {
-            result.topl = new MyPoint(1f / 9f, 1f / 3f);
-            result.topr = new MyPoint(1f / 3f, 1f / 3f);
-            result.botl = new MyPoint(1f / 9f, 8f / 9f);
-            result.botr = new MyPoint(1f / 3f, 2f / 3f);
-        } else if (pos == Positions.CENTER_LEFT_B) {
+        } else if (pos == Positions.TOP) {
             result.topl = new MyPoint(1f / 9f, 1f / 9f);
-            result.topr = new MyPoint(1f / 3f, 1f / 3f);
-            result.botl = new MyPoint(1f / 9f, 2f / 3f);
-            result.botr = new MyPoint(1f / 3f, 2f / 3f);
-        } else if (pos == Positions.LEFT_T) {
-            result.topl = new MyPoint(1f / 27f, 1f / 27f);
-            result.topr = new MyPoint(1f / 9f, 1f / 3f);
-            result.botl = new MyPoint(1f / 27f, 26f / 27f);
-            result.botr = new MyPoint(1f / 9f, 8f / 9f);
-        } else if (pos == Positions.LEFT_B) {
-            result.topl = new MyPoint(1f / 27f, 1f / 27f);
-            result.topr = new MyPoint(1f / 9f, 1f / 9f);
-            result.botl = new MyPoint(1f / 27f, 26f / 27f);
-            result.botr = new MyPoint(1f / 9f, 2f / 3f);
-        } else if (pos == Positions.CENTER_RIGHT_T) {
-            result.topl = new MyPoint(2f / 3f, 1f / 3f);
-            result.topr = new MyPoint(8f / 9f, 1f / 3f);
-            result.botl = new MyPoint(2f / 3f, 2f / 3f);
-            result.botr = new MyPoint(8f / 9f, 8f / 9f);
-        } else if (pos == Positions.CENTER_RIGHT_B) {
-            result.topl = new MyPoint(2f / 3f, 1f / 3f);
-            result.topr = new MyPoint(8f / 9f, 1f / 9f);
-            result.botl = new MyPoint(2f / 3f, 2f / 3f);
-            result.botr = new MyPoint(8f / 9f, 2f / 3f);
-        } else if (pos == Positions.RIGHT_T) {
-            result.topl = new MyPoint(8f / 9f, 1f / 3f);
-            result.topr = new MyPoint(26f / 27f, 1f / 27f);
-            result.botl = new MyPoint(8f / 9f, 8f / 9f);
-            result.botr = new MyPoint(26f / 27f, 26f / 27f);
-        } else if (pos == Positions.RIGHT_B) {
-            result.topl = new MyPoint(8f / 9f, 1f / 9f);
-            result.topr = new MyPoint(26f / 27f, 1f / 27f);
-            result.botl = new MyPoint(8f / 9f, 2f / 3f);
-            result.botr = new MyPoint(26f / 27f, 26f / 27f);
-        } else if (pos == Positions.TOP_L) {
-            result.topl = new MyPoint(1f / 27f, 1f / 27f);
-            result.topr = new MyPoint(26f / 27f, 1f / 27f);
-            result.botl = new MyPoint(1f / 3f, 1f / 9f);
-            result.botr = new MyPoint(8f / 9f, 1f / 9f);
-        } else if (pos == Positions.TOP_R) {
-            result.topl = new MyPoint(1f / 27f, 1f / 27f);
-            result.topr = new MyPoint(26f / 27f, 1f / 27f);
-            result.botl = new MyPoint(1f / 9f, 1f / 9f);
-            result.botr = new MyPoint(2f / 3f, 1f / 9f);
-        } else if (pos == Positions.CENTER_TOP_L) {
-            result.topl = new MyPoint(1f / 3f, 1f / 9f);
             result.topr = new MyPoint(8f / 9f, 1f / 9f);
             result.botl = new MyPoint(1f / 3f, 1f / 3f);
             result.botr = new MyPoint(2f / 3f, 1f / 3f);
-        } else if (pos == Positions.CENTER_TOP_R) {
-            result.topl = new MyPoint(1f / 9f, 1f / 9f);
-            result.topr = new MyPoint(2f / 3f, 1f / 9f);
-            result.botl = new MyPoint(1f / 3f, 1f / 3f);
-            result.botr = new MyPoint(2f / 3f, 1f / 3f);
-        } else if (pos == Positions.CENTER_BOT_L) {
-            result.topl = new MyPoint(1f / 3f, 2f / 3f);
-            result.topr = new MyPoint(2f / 3f, 2f / 3f);
-            result.botl = new MyPoint(1f / 3f, 8f / 9f);
-            result.botr = new MyPoint(8f / 9f, 8f / 9f);
-        } else if (pos == Positions.CENTER_BOT_R) {
+        } else if (pos == Positions.BOT) {
             result.topl = new MyPoint(1f / 3f, 2f / 3f);
             result.topr = new MyPoint(2f / 3f, 2f / 3f);
             result.botl = new MyPoint(1f / 9f, 8f / 9f);
-            result.botr = new MyPoint(2f / 3f, 8f / 9f);
-        } else if (pos == Positions.BOT_L) {
-            result.topl = new MyPoint(1f / 3f, 8f / 9f);
-            result.topr = new MyPoint(8f / 9f, 8f / 9f);
-            result.botl = new MyPoint(1f / 27f, 26f / 27f);
-            result.botr = new MyPoint(26f / 27f, 26f / 27f);
-        } else if (pos == Positions.BOT_R) {
-            result.topl = new MyPoint(1f / 9f, 8f / 9f);
-            result.topr = new MyPoint(2f / 3f, 8f / 9f);
-            result.botl = new MyPoint(1f / 27f, 26f / 27f);
-            result.botr = new MyPoint(26f / 27f, 26f / 27f);
-        } else if (pos == Positions.TOP_LEFT) {
-            result.topl = new MyPoint(1f / 27f, 1f / 27f);
-            result.topr = new MyPoint(1f / 3f, 1f / 9f);
-            result.botl = new MyPoint(1f / 9f, 1f / 3f);
-            result.botr = new MyPoint(1f / 3f, 1f / 3f);
-        } else if (pos == Positions.TOP_RIGHT) {
-            result.topl = new MyPoint(2f / 3f, 1f / 9f);
-            result.topr = new MyPoint(26f / 27f, 1f / 27f);
-            result.botl = new MyPoint(2f / 3f, 1f / 3f);
-            result.botr = new MyPoint(8f / 9f, 1f / 3f);
-        } else if (pos == Positions.BOT_LEFT) {
-            result.topl = new MyPoint(1f / 9f, 2f / 3f);
-            result.topr = new MyPoint(1f / 3f, 2f / 3f);
-            result.botl = new MyPoint(1f / 27f, 26f / 27f);
-            result.botr = new MyPoint(1f / 3f, 8f / 9f);
-        } else if (pos == Positions.BOT_RIGHT) {
-            result.topl = new MyPoint(2f / 3f, 2f / 3f);
-            result.topr = new MyPoint(8f / 9f, 2f / 3f);
-            result.botl = new MyPoint(2f / 3f, 8f / 9f);
-            result.botr = new MyPoint(26f / 27f, 26f / 27f);
-
+            result.botr = new MyPoint(8f / 9f, 8f / 9f);
+        } else if (pos == Positions.LEFT) {
+            result.topl = new MyPoint(1f/9f, 1f/9f);
+            result.topr = new MyPoint(1f / 3f, 1f / 3f);
+            result.botl = new MyPoint(1f / 9f, 8f / 9f);
+            result.botr = new MyPoint(1f / 3f, 2f / 3f);
+        } else if (pos == Positions.RIGHT) {
+            result.topl = new MyPoint(2f / 3f, 1f / 3f);
+            result.topr = new MyPoint(8f / 9f, 1f / 9f);
+            result.botl = new MyPoint(2f / 3f, 2f / 3f);
+            result.botr = new MyPoint(8f / 9f, 8f / 9f);
         } else if (pos == Positions.OUTSIDE) {
-            result.topl = new MyPoint(1f / 27f, 1f / 27f);
-            result.topr = new MyPoint(26f / 27f, 1f / 27f);
-            result.botl = new MyPoint(1f / 27f, 26f / 27f);
-            result.botr = new MyPoint(26f / 27f, 26f / 27f);
+            result.topl = new MyPoint(1f / 9f, 1f / 9f);
+            result.topr = new MyPoint(8f / 9f, 1f /9f);
+            result.botl = new MyPoint(1f / 9f, 8f /9f);
+            result.botr = new MyPoint(8f / 9f, 8f / 9f);
             result.alpha = 0x00;
-        }
-
-        if (pos == Positions.BOT_R ||
-                pos == Positions.CENTER_BOT_R) {
-            result.botl.x += .005;
-        }
-        if (pos == Positions.CENTER_TOP_R ||
-                pos == Positions.TOP_R) {
-            result.topl.x += .005;
-        }
-
-        if (pos == Positions.BOT_L ||
-                pos == Positions.CENTER_BOT_L) {
-            result.botr.x -= .005;
-        }
-        if (pos == Positions.CENTER_TOP_L ||
-                pos == Positions.TOP_L) {
-            result.topr.y -= .005;
-        }
-
-        if (pos == Positions.LEFT_T ||
-                pos == Positions.CENTER_LEFT_T) {
-            result.botl.y -= .005;
-        }
-        if (pos == Positions.RIGHT_T ||
-                pos == Positions.CENTER_RIGHT_T) {
-            result.botr.y -= .005;
-        }
-
-        if (pos == Positions.LEFT_B ||
-                pos == Positions.CENTER_LEFT_B) {
-            result.topl.y += .005;
-        }
-        if (pos == Positions.RIGHT_B ||
-                pos == Positions.CENTER_RIGHT_B) {
-            result.topr.y += .005;
-        }
-
-        if (pos == Positions.TOP_LEFT) {
-            result.topl.x += .005;
-            result.topl.y += .005;
-        } else if (pos == Positions.TOP_RIGHT) {
-            result.topr.x -= .005;
-            result.topr.y += .005;
-        } else if (pos == Positions.BOT_LEFT) {
-            result.botl.x += .005;
-            result.botl.y -= .005;
-        } else if (pos == Positions.BOT_RIGHT) {
-            result.botr.x -= .005;
-            result.botr.y -= .005;
         }
 
         result.topl.x += .005;
@@ -1220,21 +989,14 @@ public class Cube {
         }
     }
 
-    public void lookAtY(Positions pos) {
-        //TODO if i need this
-        if (pos == Positions.BOT_R || pos == Positions.BOT_L) {
-            lookAtY(-2);
-        }
-    }
 
     public void lookAtY(float myOffset) {
-        boolean hasTopLeft = topLeft();
         for (Side s : sides) {
             Positions startedAt = s.pos;
-            Positions currentAt = getPosMoveY(s.pos, Math.round(myOffset), hasTopLeft);
+            Positions currentAt = getPosMoveY(s.pos, Math.round(myOffset));
             // handle rotations
-            int rotations = getRotationsY(startedAt, currentAt);
-            s.rotate(-rotations);
+            //int rotations = getRotationsY(startedAt, currentAt);
+            //s.rotate(-rotations);
 
             if ((currentAt == Positions.OUTSIDE) != (startedAt == Positions.OUTSIDE)) {
                 s.flipX();
@@ -1255,14 +1017,13 @@ public class Cube {
     }
 
     public void lookAtX(float myOffset) {
-        boolean hasTopLeft = topLeft();
         for (Side s : sides) {
             Positions startedAt = s.pos;
-            Positions currentAt = getPosMoveX(s.pos, Math.round(myOffset), hasTopLeft);
+            Positions currentAt = getPosMoveX(s.pos, Math.round(myOffset));
 
             // handle rotations
-            int rotations = getRotationsX(startedAt, currentAt);
-            s.rotate(-rotations);
+            //int rotations = getRotationsX(startedAt, currentAt);
+            //s.rotate(-rotations);
 
             if ((currentAt == Positions.OUTSIDE) != (startedAt == Positions.OUTSIDE)) {
                 s.flipY();
@@ -1273,13 +1034,12 @@ public class Cube {
     }
 
     public void rotateX(int targetOffset, int myScrollX) {
-        boolean hasTopLeft = topLeft();
         HashMap<Side, int[]> newData = new HashMap<Side, int[]>();
 
         for (Side s : sides) {
             if (inX(s.pos)) {
                 int[] myNewData = new int[size];
-                Positions currentAt = getPosMoveX(s.pos, -targetOffset, hasTopLeft);
+                Positions currentAt = getPosMoveX(s.pos, -targetOffset);
                 Side takeFrom = get(currentAt);
                 for (int x = 0; x < size; x++) {
                     if (currentAt == Positions.OUTSIDE) {
@@ -1293,7 +1053,7 @@ public class Cube {
             } else if ((inTop(s.pos) && myScrollX == 0) ||
                     (inBot(s.pos) && myScrollX == size - 1)) {
                 Positions startedAt = s.pos;
-                Positions currentAt = getPosMoveX(s.pos, targetOffset, hasTopLeft);
+                Positions currentAt = getPosMoveX(s.pos, targetOffset);
                 int rotations = getRotationsX(startedAt, currentAt);
                 s.rotate(-rotations);
                 s.pos = currentAt;
@@ -1315,12 +1075,11 @@ public class Cube {
 
     public void rotateY(int targetOffset, int myScrollY) {
         HashMap<Side, int[]> newData = new HashMap<Side, int[]>();
-        boolean hasTopLeft = topLeft();
 
         for (Side s : sides) {
             if (inY(s.pos)) {
                 int[] myNewData = new int[size];
-                Positions currentAt = getPosMoveY(s.pos, -targetOffset, hasTopLeft);
+                Positions currentAt = getPosMoveY(s.pos, -targetOffset);
                 Side takeFrom = get(currentAt);
                 for (int y = 0; y < size; y++) {
                     if (currentAt == Positions.OUTSIDE) {
@@ -1333,7 +1092,7 @@ public class Cube {
             } else if ((inLeft(s.pos) && myScrollY == 0)
                     || (inRight(s.pos) && myScrollY == size - 1)) {
                 Positions startedAt = s.pos;
-                Positions currentAt = getPosMoveY(s.pos, targetOffset, hasTopLeft);
+                Positions currentAt = getPosMoveY(s.pos, targetOffset);
                 int rotations = getRotationsY(startedAt, currentAt);
                 s.rotate(-rotations);
                 s.pos = currentAt;
@@ -1354,39 +1113,19 @@ public class Cube {
     }
 
     private boolean inRight(Positions pos) {
-        return pos == Positions.RIGHT_T ||
-                pos == Positions.RIGHT_B ||
-                pos == Positions.CENTER_RIGHT_T ||
-                pos == Positions.CENTER_RIGHT_B ||
-                pos == Positions.BOT_RIGHT ||
-                pos == Positions.TOP_RIGHT;
+        return pos == Positions.RIGHT;
     }
 
     private boolean inLeft(Positions pos) {
-        return pos == Positions.LEFT_T ||
-                pos == Positions.LEFT_B ||
-                pos == Positions.CENTER_LEFT_T ||
-                pos == Positions.CENTER_LEFT_B ||
-                pos == Positions.BOT_LEFT ||
-                pos == Positions.TOP_LEFT;
+        return pos == Positions.RIGHT;
     }
 
     private boolean inBot(Positions pos) {
-        return pos == Positions.BOT_L ||
-                pos == Positions.BOT_R ||
-                pos == Positions.CENTER_BOT_L ||
-                pos == Positions.CENTER_BOT_R ||
-                pos == Positions.BOT_LEFT ||
-                pos == Positions.BOT_RIGHT;
+        return pos == Positions.BOT ;
     }
 
     private boolean inTop(Positions pos) {
-        return pos == Positions.TOP_L ||
-                pos == Positions.TOP_R ||
-                pos == Positions.CENTER_TOP_L ||
-                pos == Positions.CENTER_TOP_R ||
-                pos == Positions.TOP_LEFT ||
-                pos == Positions.TOP_RIGHT;
+        return pos == Positions.TOP;
     }
 
     private int getScrollX() {
@@ -1420,9 +1159,9 @@ public class Cube {
 
     public int getRotationsX(Positions startedAt, Positions endedAt) {
         ArrayList<Positions[]> lists = new ArrayList<Positions[]>();
-        Positions[] topList = {Positions.TOP_R, Positions.TOP_LEFT, Positions.CENTER_TOP_R, Positions.CENTER_TOP_L, Positions.TOP_RIGHT, Positions.TOP_L};
+        Positions[] topList = {Positions.TOP};
         lists.add(topList);
-        Positions[] botList = {Positions.BOT_R, Positions.BOT_LEFT, Positions.CENTER_BOT_R, Positions.CENTER_BOT_L, Positions.BOT_RIGHT, Positions.BOT_L};
+        Positions[] botList = {Positions.BOT};
         lists.add(botList);
 
         return getRotations(lists, startedAt, endedAt);
@@ -1431,9 +1170,9 @@ public class Cube {
     public int getRotationsY(Positions startedAt, Positions endedAt) {
         ArrayList<Positions[]> lists = new ArrayList<Positions[]>();
 
-        Positions[] leftList = {Positions.LEFT_B, Positions.TOP_LEFT, Positions.CENTER_LEFT_B, Positions.CENTER_LEFT_T, Positions.BOT_LEFT, Positions.LEFT_T};
+        Positions[] leftList = {Positions.LEFT};
         lists.add(leftList);
-        Positions[] rightList = {Positions.RIGHT_B, Positions.TOP_RIGHT, Positions.CENTER_RIGHT_B, Positions.CENTER_RIGHT_T, Positions.BOT_RIGHT, Positions.RIGHT_T};
+        Positions[] rightList = {Positions.RIGHT};
         lists.add(rightList);
 
         return getRotations(lists, startedAt, endedAt);
@@ -1570,18 +1309,10 @@ public class Cube {
 
     public enum Positions {
         CENTER,
-        CENTER_LEFT_T, CENTER_LEFT_B,
-        LEFT_T, LEFT_B,
-        CENTER_RIGHT_T, CENTER_RIGHT_B,
-        RIGHT_T, RIGHT_B,
-        TOP_L, TOP_R,
-        CENTER_TOP_L, CENTER_TOP_R,
-        CENTER_BOT_L, CENTER_BOT_R,
-        BOT_L, BOT_R,
-        TOP_LEFT,
-        TOP_RIGHT,
-        BOT_LEFT,
-        BOT_RIGHT,
+        TOP,
+        LEFT,
+        RIGHT,
+        BOT,
         OUTSIDE
     }
 

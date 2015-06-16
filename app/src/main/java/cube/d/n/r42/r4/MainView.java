@@ -37,6 +37,7 @@ public class MainView extends GLSurfaceView implements View.OnTouchListener {
 
     private void init() {
         setEGLContextClientVersion(2);
+        setEGLConfigChooser(8 , 8, 8, 8, 16, 0);
 
         mRenderer = new MyGLRenderer(this);
 
