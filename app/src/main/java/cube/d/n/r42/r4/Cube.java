@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 
 import java.lang.Float;import java.lang.Math;import java.lang.System;import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -24,7 +25,7 @@ public class Cube {
     public float width;
     public boolean startCenter = false;
     public Challenge myChallenge = null;
-    Side[] sides = new Side[12];
+    Side[] sides = new Side[6];
     int size;
     float currentAlpha = 0;
     boolean spinning = false;
@@ -50,7 +51,7 @@ public class Cube {
         sides[2] = new Side(2, Positions.LEFT, size, this);
         sides[3] = new Side(3, Positions.RIGHT, size, this);
         sides[4] = new Side(4, Positions.BOT, size, this);
-        sides[11] = new Side(11, Positions.OUTSIDE, size, this);
+        sides[5] = new Side(5, Positions.OUTSIDE, size, this);
 
     }
 
@@ -183,17 +184,17 @@ public class Cube {
                 if (x >= 0) {
                     //draw on left
                     DrawInfo mine = new DrawInfo(base);
-                    mine.topl = new MyPoint((float) ((x - flr) / cel * (1f / 27f)), 1f / 3f + y / (3f * size));
-                    mine.topr = new MyPoint((float) ((x + 1 - flr) / cel * (1f / 27f)), 1f / 3f + y / (3f * size));
-                    mine.botl = new MyPoint((float) ((x - flr) / cel * (1f / 27f)), 1f / 3f + (y + 1f) / (3f * size));
-                    mine.botr = new MyPoint((float) ((x + 1 - flr) / cel * (1f / 27f)), 1f / 3f + (y + 1f) / (3f * size));
+                    mine.topl = new MyPoint((float) ((x - flr) / cel * (1f / 9f)), 1f / 3f + y / (3f * size));
+                    mine.topr = new MyPoint((float) ((x + 1 - flr) / cel * (1f / 9f)), 1f / 3f + y / (3f * size));
+                    mine.botl = new MyPoint((float) ((x - flr) / cel * (1f / 9f)), 1f / 3f + (y + 1f) / (3f * size));
+                    mine.botr = new MyPoint((float) ((x + 1 - flr) / cel * (1f / 9f)), 1f / 3f + (y + 1f) / (3f * size));
                     if (y == 0) {
-                        mine.topl.y = 1f / 27f;
-                        mine.topr.y = 1f / 27f;
+                        mine.topl.y = 1f / 9f;
+                        mine.topr.y = 1f / 9f;
                     }
                     if (y == size - 1) {
-                        mine.botl.y = 26f / 27f;
-                        mine.botr.y = 26f / 27f;
+                        mine.botl.y = 8f / 9f;
+                        mine.botr.y = 8f / 9f;
                     }
                     //mine.upScalePoints();
 
@@ -204,17 +205,17 @@ public class Cube {
                 if (x <= size) {
                     //draw on right
                     DrawInfo mine = new DrawInfo(base);
-                    mine.topl = new MyPoint(26f / 27f + (float) ((x) / cel * (1f / 27f)), 1f / 3f + y / (3f * size));
-                    mine.topr = new MyPoint(26f / 27f + (float) ((x + 1) / cel * (1f / 27f)), 1f / 3f + y / (3f * size));
-                    mine.botl = new MyPoint(26f / 27f + (float) ((x) / cel * (1f / 27f)), 1f / 3f + (y + 1f) / (3f * size));
-                    mine.botr = new MyPoint(26f / 27f + (float) ((x + 1) / cel * (1f / 27f)), 1f / 3f + (y + 1f) / (3f * size));
+                    mine.topl = new MyPoint(8f / 9f + (float) ((x) / cel * (1f / 9f)), 1f / 3f + y / (3f * size));
+                    mine.topr = new MyPoint(8f / 9f + (float) ((x + 1) / cel * (1f / 9f)), 1f / 3f + y / (3f * size));
+                    mine.botl = new MyPoint(8f / 9f + (float) ((x) / cel * (1f / 9f)), 1f / 3f + (y + 1f) / (3f * size));
+                    mine.botr = new MyPoint(8f / 9f + (float) ((x + 1) / cel * (1f / 9f)), 1f / 3f + (y + 1f) / (3f * size));
                     if (y == 0) {
-                        mine.topl.y = 1f / 27f;
-                        mine.topr.y = 1f / 27f;
+                        mine.topl.y = 1f / 9f;
+                        mine.topr.y = 1f / 9f;
                     }
                     if (y == size - 1) {
-                        mine.botl.y = 26f / 27f;
-                        mine.botr.y = 26f / 27f;
+                        mine.botl.y = 8f / 9f;
+                        mine.botr.y = 8f / 9f;
                     }
                     //mine.upScalePoints();
 
@@ -226,17 +227,17 @@ public class Cube {
                 if (y >= 0) {
                     //draw top
                     DrawInfo mine = new DrawInfo(base);
-                    mine.topl = new MyPoint(1f / 3f + x / (3f * size), (float) ((y - flr) / cel * (1f / 27f)));
-                    mine.topr = new MyPoint(1f / 3f + (x + 1f) / (3f * size), (float) ((y - flr) / cel * (1f / 27f)));
-                    mine.botl = new MyPoint(1f / 3f + x / (3f * size), (float) ((y + 1 - flr) / cel * (1f / 27f)));
-                    mine.botr = new MyPoint(1f / 3f + (x + 1f) / (3f * size), (float) ((y + 1 - flr) / cel * (1f / 27f)));
+                    mine.topl = new MyPoint(1f / 3f + x / (3f * size), (float) ((y - flr) / cel * (1f / 9f)));
+                    mine.topr = new MyPoint(1f / 3f + (x + 1f) / (3f * size), (float) ((y - flr) / cel * (1f / 9f)));
+                    mine.botl = new MyPoint(1f / 3f + x / (3f * size), (float) ((y + 1 - flr) / cel * (1f / 9f)));
+                    mine.botr = new MyPoint(1f / 3f + (x + 1f) / (3f * size), (float) ((y + 1 - flr) / cel * (1f / 9f)));
                     if (x == 0) {
-                        mine.topl.x = 1f / 27f;
-                        mine.botl.x = 1f / 27f;
+                        mine.topl.x = 1f / 9f;
+                        mine.botl.x = 1f / 9f;
                     }
                     if (x == size - 1) {
-                        mine.topr.x = 26f / 27f;
-                        mine.botr.x = 26f / 27f;
+                        mine.topr.x = 8f / 9f;
+                        mine.botr.x = 8f / 9f;
                     }
                     //mine.upScalePoints();
 
@@ -247,17 +248,17 @@ public class Cube {
                 if (y <= size) {
                     //draw on bot
                     DrawInfo mine = new DrawInfo(base);
-                    mine.topl = new MyPoint(1f / 3f + x / (3f * size), 26f / 27f + (float) ((y) / cel * (1f / 27f)));
-                    mine.topr = new MyPoint(1f / 3f + (x + 1f) / (3f * size), 26f / 27f + (float) ((y) / cel * (1f / 27f)));
-                    mine.botl = new MyPoint(1f / 3f + x / (3f * size), 26f / 27f + (float) ((y + 1) / cel * (1f / 27f)));
-                    mine.botr = new MyPoint(1f / 3f + (x + 1f) / (3f * size), 26f / 27f + (float) ((y + 1) / cel * (1f / 27f)));
+                    mine.topl = new MyPoint(1f / 3f + x / (3f * size), 8f / 9f + (float) ((y) / cel * (1f / 9f)));
+                    mine.topr = new MyPoint(1f / 3f + (x + 1f) / (3f * size), 8f / 9f + (float) ((y) / cel * (1f / 9f)));
+                    mine.botl = new MyPoint(1f / 3f + x / (3f * size), 8f / 9f + (float) ((y + 1) / cel * (1f / 9f)));
+                    mine.botr = new MyPoint(1f / 3f + (x + 1f) / (3f * size), 8f / 9f + (float) ((y + 1) / cel * (1f / 9f)));
                     if (x == 0) {
-                        mine.topl.x = 1f / 27f;
-                        mine.botl.x = 1f / 27f;
+                        mine.topl.x = 1f / 9f;
+                        mine.botl.x = 1f / 9f;
                     }
                     if (x == size - 1) {
-                        mine.topr.x = 26f / 27f;
-                        mine.botr.x = 26f / 27f;
+                        mine.topr.x = 8f / 9f;
+                        mine.botr.x = 8f / 9f;
                     }
                     //mine.upScalePoints();
 
@@ -282,8 +283,7 @@ public class Cube {
 
     private void slideX(DrawInfo base, float offset, boolean[] scroll) {
         for (Side s : sides) {
-            if (inX(s.pos)
-                    ) {
+            if (inX(s.pos)) {
                 s.drawX(base, offset, scroll);
             } else if (s.pos == Positions.TOP) {
                 if (scroll[0]) {
@@ -405,7 +405,6 @@ public class Cube {
         } else if (movingY()) {
             from = getPosMoveY(current, i);
             to = getPosMoveY(current, j);
-
         } else {
             from = getPosMoveY(current, i);
             to = getPosMoveY(current, j);
@@ -416,12 +415,12 @@ public class Cube {
         //int rotatedX = Side.rotateX(xIndex,yIndex,rotations,size);
         //int rotatedY = Side.rotateY(xIndex, yIndex, rotations, size);
 
-        if (clockwise(from, to)) {
+        if (clockwise(from,offset)) {
             return rCAve(
                     getSectionPoints(xIndex, yIndex, from, base),
                     getSectionPoints(yIndex, size - 1 - xIndex, to, base), p);
 
-        } else if (counterClockwise(from, to)) {
+        } else if (counterClockwise(from, offset)) {
             return rCCAve(
                     getSectionPoints(xIndex, yIndex, from, base),
                     getSectionPoints(size - 1 - yIndex, xIndex, to, base), p);
@@ -456,12 +455,7 @@ public class Cube {
         }
     }
 
-    private boolean clockwise(Positions from, Positions to) {
-        return ((to == Positions.OUTSIDE) && from == Positions.LEFT ||
-                (to == Positions.LEFT && from == Positions.CENTER) ||
-                (to == Positions.CENTER && from == Positions.RIGHT) ||
-                (to == Positions.RIGHT && from == Positions.OUTSIDE));
-    }
+
 
     //TODO this is a bit depricated
     // as in a lot of it's paths will never be called
@@ -486,13 +480,13 @@ public class Cube {
             to = getPosMoveY(center, j);
         }
 
-        if (clockwise(from, to)
+        if (clockwise(from, offset)
                 ) {
             return rCAve(
                     getPoints(from, base),
                     getPoints(to, base), p);
 
-        } else if (counterClockwise(from, to)
+        } else if (counterClockwise(from, offset)
                 ) {
             return rCCAve(
                     getPoints(from, base),
@@ -527,11 +521,14 @@ public class Cube {
         }
     }
 
-    private boolean counterClockwise(Positions from, Positions to) {
-        return (from == Positions.OUTSIDE) && to == Positions.LEFT ||
-                (from == Positions.LEFT && to == Positions.CENTER) ||
-                (from == Positions.CENTER && to == Positions.RIGHT) ||
-                (from == Positions.RIGHT && to == Positions.OUTSIDE);
+    private boolean clockwise(Positions current, float offset) {
+        return  current == Positions.TOP && (moveX() || scrollX[0])  ||
+                current == Positions.RIGHT && (moveY() || scrollY[scrollY.length -1]);
+    }
+
+    private boolean counterClockwise(Positions current, float offset) {
+               return (current== Positions.BOT && (moveX() || scrollX[scrollX.length-1]) ) ||
+                (current== Positions.LEFT && (moveY()||scrollY[0]));
     }
 
     public boolean movingX() {
@@ -618,11 +615,11 @@ public class Cube {
 //            offset += 6;
 //        }
 
-        ArrayList<Positions[]> lists = new ArrayList<Positions[]>();
-        Positions[] centerList1 = {Positions.LEFT, Positions.CENTER, Positions.RIGHT, Positions.OUTSIDE};
-        lists.add(centerList1);
 
-        if (current == Positions.CENTER || current == Positions.OUTSIDE) {
+        Positions[] centerList1 = {Positions.LEFT, Positions.CENTER, Positions.RIGHT, Positions.OUTSIDE};
+
+
+        if (Arrays.asList(centerList1).contains(current)) {
                 for (int i = 0; i < centerList1.length; i++) {
                     if (current == centerList1[i]) {
                         //we found it
@@ -632,18 +629,7 @@ public class Cube {
                 }
             }
 
-        for (Positions[] list : lists) {
-            for (int i = 0; i < list.length; i++) {
-                if (current == list[i]) {
-                    //we found it
-                    return list[(i + offset + list.length * 3) % list.length];
-                }
-            }
-        }
-
-        Log.e("getPosMoveX", "should return something!");
-
-        return null;
+       return current;
     }
 
     public Positions getPosMoveY(Positions current, int offset) {
@@ -652,12 +638,10 @@ public class Cube {
 //            offset += 6;
 //        }
 
-        ArrayList<Positions[]> lists = new ArrayList<Positions[]>();
         Positions[] centerList1 = {Positions.TOP, Positions.CENTER, Positions.BOT, Positions.OUTSIDE};
-        lists.add(centerList1);
 
 
-        if (current == Positions.CENTER || current == Positions.OUTSIDE) {
+        if (Arrays.asList(centerList1).contains(current)) {
                 for (int i = 0; i < centerList1.length; i++) {
                     if (current == centerList1[i]) {
                         //we found it
@@ -666,18 +650,7 @@ public class Cube {
                 }
         }
 
-        for (Positions[] list : lists) {
-            for (int i = 0; i < list.length; i++) {
-                if (current == list[i]) {
-                    //we found it
-                    return list[(i + offset + list.length * 3) % list.length];
-                }
-            }
-        }
-
-        Log.e("getPosMoveX", "should return something!");
-
-        return null;
+        return current;
     }
 
     private DrawInfo getSectionPoints(int xIndex, int yIndex, DrawInfo startWidth, Positions pos) {
@@ -841,15 +814,14 @@ public class Cube {
             result.botr = new MyPoint(8f / 9f, 8f / 9f);
             result.alpha = 0x00;
         }
-
-        result.topl.x += .005;
-        result.topr.x -= .005;
-        result.botl.x += .005;
-        result.botr.x -= .005;
-        result.topl.y += .005;
-        result.topr.y += .005;
-        result.botl.y -= .005;
-        result.botr.y -= .005;
+//        result.topl.x += .005;
+//        result.topr.x -= .005;
+//        result.botl.x += .005;
+//        result.botr.x -= .005;
+//        result.topl.y += .005;
+//        result.topr.y += .005;
+//        result.botl.y -= .005;
+//        result.botr.y -= .005;
         return result;
     }
 
@@ -906,16 +878,16 @@ public class Cube {
 
                 if (moveX()) {
                     //calculate offset
-                    offsetX = stickyOffset(((event.getX() - xStartAt) / width) * 6);
+                    offsetX = stickyOffset(((event.getX() - xStartAt) / width) * 4);
                 } else if (moveY()) {
                     //calculate offset
-                    offsetY = stickyOffset(((event.getY() - yStartAt) / height) * 6);
+                    offsetY = stickyOffset(((event.getY() - yStartAt) / height) * 4);
                 } else if (slideX()) {
                     //calculate offset
-                    offsetX = stickyOffset2(((event.getX() - xStartAt) / width) * 6);
+                    offsetX = stickyOffset(((event.getX() - xStartAt) / width) * 4);
                 } else if (slideY()) {
                     //calculate offset
-                    offsetY = stickyOffset2(((event.getY() - yStartAt) / height) * 6);
+                    offsetY = stickyOffset(((event.getY() - yStartAt) / height) * 4);
                 }
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 actionUp(event);
@@ -935,7 +907,7 @@ public class Cube {
             //calculate offset
             moveX(false);
 
-            offsetX = stickyOffset(((event.getX() - xStartAt) / width) * 6);
+            offsetX = stickyOffset(((event.getX() - xStartAt) / width) * 4);
 
             lookAtX(offsetX);
 
@@ -945,7 +917,7 @@ public class Cube {
             //calculate offset
             moveY(false);
 
-            offsetY = stickyOffset(((event.getY() - yStartAt) / height) * 6);
+            offsetY = stickyOffset(((event.getY() - yStartAt) / height) * 4);
 
             lookAtY(offsetY);
 
@@ -955,8 +927,8 @@ public class Cube {
         } else if (slideX()) {
 
 
-            offsetX = stickyOffset2(((event.getX() - xStartAt) / width) * 6);
-            int targetOffset = Math.round(offsetX / 2f) * 2;
+            offsetX = stickyOffset(((event.getX() - xStartAt) / width) * 4);
+            int targetOffset = Math.round(offsetX ) ;
             int myScrollX = getScrollX();
 
             rotateX(targetOffset, myScrollX);
@@ -968,11 +940,11 @@ public class Cube {
         } else if (slideY()) {
 
 
-            offsetY = stickyOffset2(((event.getY() - yStartAt) / height) * 6);
-            int targetOffset = Math.round(offsetY / 2f) * 2;
+            offsetY = stickyOffset(((event.getY() - yStartAt) / height) * 4);
+            int targetOffset = Math.round(offsetY) ;
             int myScrollY = getScrollY();
 
-            rotateY(targetOffset, myScrollY);
+            rotateY(targetOffset, targetOffset);
 
             offsetY = (float) (offsetY - targetOffset);
             moveY(false);
@@ -995,8 +967,8 @@ public class Cube {
             Positions startedAt = s.pos;
             Positions currentAt = getPosMoveY(s.pos, Math.round(myOffset));
             // handle rotations
-            //int rotations = getRotationsY(startedAt, currentAt);
-            //s.rotate(-rotations);
+            int rotations = getRotationsY(startedAt, Math.round(myOffset));
+            s.rotate(-rotations);
 
             if ((currentAt == Positions.OUTSIDE) != (startedAt == Positions.OUTSIDE)) {
                 s.flipX();
@@ -1022,8 +994,8 @@ public class Cube {
             Positions currentAt = getPosMoveX(s.pos, Math.round(myOffset));
 
             // handle rotations
-            //int rotations = getRotationsX(startedAt, currentAt);
-            //s.rotate(-rotations);
+            int rotations = getRotationsX(startedAt, currentAt);
+            s.rotate(-rotations);
 
             if ((currentAt == Positions.OUTSIDE) != (startedAt == Positions.OUTSIDE)) {
                 s.flipY();
@@ -1093,7 +1065,7 @@ public class Cube {
                     || (inRight(s.pos) && myScrollY == size - 1)) {
                 Positions startedAt = s.pos;
                 Positions currentAt = getPosMoveY(s.pos, targetOffset);
-                int rotations = getRotationsY(startedAt, currentAt);
+                int rotations = getRotationsY(startedAt, targetOffset);
                 s.rotate(-rotations);
                 s.pos = currentAt;
             }
@@ -1167,15 +1139,15 @@ public class Cube {
         return getRotations(lists, startedAt, endedAt);
     }
 
-    public int getRotationsY(Positions startedAt, Positions endedAt) {
-        ArrayList<Positions[]> lists = new ArrayList<Positions[]>();
+    public int getRotationsY(Positions startedAt, int offset) {
+        if (counterClockwise(startedAt,offset)){
+            return -Math.abs(offset);
+        }
+        if (clockwise(startedAt,offset)){
+            return Math.abs(offset);
+        }
 
-        Positions[] leftList = {Positions.LEFT};
-        lists.add(leftList);
-        Positions[] rightList = {Positions.RIGHT};
-        lists.add(rightList);
-
-        return getRotations(lists, startedAt, endedAt);
+        return 0;
     }
 
     public int getRotations(ArrayList<Positions[]> lists, Positions startedAt, Positions endedAt) {
@@ -1203,10 +1175,10 @@ public class Cube {
             for (int i = 0; i < array.length; i++) {
                 if (array[i] == current) {
                     Positions next = array[(i + 1) % array.length];
-                    if (clockwise(current, next)) {
+                    if (clockwise(current, (moveX()? offsetX: offsetY))) {
                         result++;
                     }
-                    if (counterClockwise(current, next)) {
+                    if (counterClockwise(current, (moveX()? offsetX: offsetY))) {
                         result--;
                     }
                     current = next;
@@ -1282,11 +1254,11 @@ public class Cube {
         return (float) (flr + (Math.sin((rem - .5) * Math.PI) / Math.abs(Math.sin((rem - .5) * Math.PI))) * Math.pow(Math.abs(Math.sin((rem - .5) * Math.PI)), .6) / 2 + .5);
     }
 
-    public float stickyOffset2(float myOffset) {
-        float flr = (float) Math.floor(myOffset / 2f) * 2f;
-        float rem = myOffset - flr;
-        return (float) (flr + (Math.sin((rem - 1) * Math.PI / 2) / Math.abs(Math.sin((rem - 1) * Math.PI / 2))) * Math.pow(Math.abs(Math.sin((rem - 1) * Math.PI / 2)), .8) + 1);
-    }
+//    public float stickyOffset2(float myOffset) {
+//        float flr = (float) Math.floor(myOffset / 2f) * 2f;
+//        float rem = myOffset - flr;
+//        return (float) (flr + (Math.sin((rem - 1) * Math.PI / 2) / Math.abs(Math.sin((rem - 1) * Math.PI / 2))) * Math.pow(Math.abs(Math.sin((rem - 1) * Math.PI / 2)), .8) + 1);
+//    }
 
     public void reset() {
         for (Side s : sides) {

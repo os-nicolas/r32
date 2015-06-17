@@ -30,7 +30,7 @@ public class Quads {
         this.br.y = -(br.y) * 2f + 1f;
         this.color = color;
 
-        float c2 = 10f;
+        float c2 = 0f;
 
 //        float centerX = (this.tl.x + this.tr.x + this.bl.x + this.br.x)/4f;
 

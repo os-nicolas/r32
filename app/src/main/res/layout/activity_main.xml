@@ -74,11 +74,11 @@
 
         </LinearLayout>
 
-        <!--<Button-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="1"-->
-        <!--android:text="About hypercubes"-->
-        <!--android:id="@+id/button_about" />-->
+        <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="About hypercubes"
+        android:id="@+id/button_about" />
     </LinearLayout>
 </FrameLayout>

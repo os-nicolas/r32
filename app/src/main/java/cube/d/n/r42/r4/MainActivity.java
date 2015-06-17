@@ -83,14 +83,14 @@ public class MainActivity extends Activity {
             }
         });
 
-//        Button about = (Button) findViewById(R.id.button_about);
-//        about.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent myIntent = new Intent(that, Tutorial.class);
-//                that.startActivity(myIntent);
-//            }
-//        });
+        Button about = (Button) findViewById(R.id.button_about);
+        about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(that, Tutorial.class);
+                that.startActivity(myIntent);
+            }
+        });
 
     }
 

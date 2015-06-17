@@ -393,6 +393,8 @@ public class Side {
     }
 
     public void draw(DrawInfo base, float offset) {
+
+
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
 
@@ -472,7 +474,7 @@ public class Side {
         } else if (owner.movingY()) {
             from = owner.getPosMoveY(current, i);
             to = owner.getPosMoveY(current, j);
-            rotations = owner.getRotationsY(current, from);
+            rotations = owner.getRotationsY(current, (int)Math.floor(offset));
             rotatedX = Side.rotateX(xIndex, yIndex, rotations, size);
             rotatedY = Side.rotateY(xIndex, yIndex, rotations, size);
             if ((current == Cube.Positions.OUTSIDE)) {
