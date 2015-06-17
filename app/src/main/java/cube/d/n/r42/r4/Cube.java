@@ -393,9 +393,12 @@ public class Cube {
     }
 
     public DrawInfo getAve(Positions current, float offset, DrawInfo base, int xIndex, int yIndex) {
-        int i = (int) Math.floor(offset);
-        int j = (int) Math.ceil(offset);
-        float p = 1 - (offset - i);
+        int i = (int) Math.floor(offset);//-1
+        int j = (int) Math.ceil(offset);//0
+        float p= 1 - (offset - i);
+        //1-(-.1--1)
+        //1+.1-1
+        //.1
 
         Positions from;
         Positions to;
@@ -410,20 +413,33 @@ public class Cube {
             to = getPosMoveY(current, j);
         }
 
-        //int rotations = getRotations(current,from);
 
-        //int rotatedX = Side.rotateX(xIndex,yIndex,rotations,size);
-        //int rotatedY = Side.rotateY(xIndex, yIndex, rotations, size);
+//        int rotations = getRotations(current,offset);
+//
+//        int rotatedX = Side.rotateX(xIndex,yIndex,rotations,size);
+//        int rotatedY = Side.rotateY(xIndex, yIndex, rotations, size);
 
         if (clockwise(from,offset)) {
-            return rCAve(
-                    getSectionPoints(xIndex, yIndex, from, base),
-                    getSectionPoints(yIndex, size - 1 - xIndex, to, base), p);
+            if (offset>0) {
+                return rCAve(
+                        getSectionPoints(xIndex, yIndex, from, base),
+                        getSectionPoints(yIndex, size - 1 - xIndex, to, base), p);
+            }else{
+                return rCCAve(
+                        getSectionPoints(size - 1 - yIndex, xIndex, from, base),
+                        getSectionPoints(size - 1 - xIndex, size - 1 - yIndex, to, base), 1-p);
+            }
 
         } else if (counterClockwise(from, offset)) {
+            if (offset>0) {
             return rCCAve(
                     getSectionPoints(xIndex, yIndex, from, base),
                     getSectionPoints(size - 1 - yIndex, xIndex, to, base), p);
+            }else{
+                return rCAve(
+                        getSectionPoints(yIndex, size - 1 - xIndex, from, base),
+                        getSectionPoints(size - 1 - xIndex, size - 1 - yIndex, to, base), 1-p);
+            }
 
         } else if (from == Positions.OUTSIDE && to == Positions.OUTSIDE) {
             return getSectionPoints(xIndex, yIndex, Positions.OUTSIDE, base);
@@ -814,14 +830,14 @@ public class Cube {
             result.botr = new MyPoint(8f / 9f, 8f / 9f);
             result.alpha = 0x00;
         }
-//        result.topl.x += .005;
-//        result.topr.x -= .005;
-//        result.botl.x += .005;
-//        result.botr.x -= .005;
-//        result.topl.y += .005;
-//        result.topr.y += .005;
-//        result.botl.y -= .005;
-//        result.botr.y -= .005;
+        result.topl.x += .005;
+        result.topr.x -= .005;
+        result.botl.x += .005;
+        result.botr.x -= .005;
+        result.topl.y += .005;
+        result.topr.y += .005;
+        result.botl.y -= .005;
+        result.botr.y -= .005;
         return result;
     }
 
@@ -944,7 +960,7 @@ public class Cube {
             int targetOffset = Math.round(offsetY) ;
             int myScrollY = getScrollY();
 
-            rotateY(targetOffset, targetOffset);
+            rotateY(targetOffset, myScrollY);
 
             offsetY = (float) (offsetY - targetOffset);
             moveY(false);
@@ -994,7 +1010,7 @@ public class Cube {
             Positions currentAt = getPosMoveX(s.pos, Math.round(myOffset));
 
             // handle rotations
-            int rotations = getRotationsX(startedAt, currentAt);
+            int rotations = getRotationsX(startedAt, Math.round(myOffset));
             s.rotate(-rotations);
 
             if ((currentAt == Positions.OUTSIDE) != (startedAt == Positions.OUTSIDE)) {
@@ -1006,6 +1022,7 @@ public class Cube {
     }
 
     public void rotateX(int targetOffset, int myScrollX) {
+        Log.d("I rotated","X");
         HashMap<Side, int[]> newData = new HashMap<Side, int[]>();
 
         for (Side s : sides) {
@@ -1026,7 +1043,7 @@ public class Cube {
                     (inBot(s.pos) && myScrollX == size - 1)) {
                 Positions startedAt = s.pos;
                 Positions currentAt = getPosMoveX(s.pos, targetOffset);
-                int rotations = getRotationsX(startedAt, currentAt);
+                int rotations = getRotationsX(startedAt, targetOffset);
                 s.rotate(-rotations);
                 s.pos = currentAt;
             }
@@ -1046,6 +1063,8 @@ public class Cube {
     }
 
     public void rotateY(int targetOffset, int myScrollY) {
+
+        Log.d("I rotated","Y");
         HashMap<Side, int[]> newData = new HashMap<Side, int[]>();
 
         for (Side s : sides) {
@@ -1129,14 +1148,15 @@ public class Cube {
         return null;
     }
 
-    public int getRotationsX(Positions startedAt, Positions endedAt) {
-        ArrayList<Positions[]> lists = new ArrayList<Positions[]>();
-        Positions[] topList = {Positions.TOP};
-        lists.add(topList);
-        Positions[] botList = {Positions.BOT};
-        lists.add(botList);
+    public int getRotationsX(Positions startedAt, int offset) {
+        if (counterClockwise(startedAt,offset)){
+            return -Math.abs(offset);
+        }
+        if (clockwise(startedAt,offset)){
+            return Math.abs(offset);
+        }
 
-        return getRotations(lists, startedAt, endedAt);
+        return 0;
     }
 
     public int getRotationsY(Positions startedAt, int offset) {

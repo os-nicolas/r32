@@ -457,7 +457,7 @@ public class Side {
         if (owner.movingX()) {
             from = owner.getPosMoveX(current, i);
             to = owner.getPosMoveX(current, j);
-            rotations = owner.getRotationsX(current, from);
+            rotations = owner.getRotationsX(current, (int)Math.floor(offset));
             rotatedX = Side.rotateX(xIndex, yIndex, rotations, size);
             rotatedY = Side.rotateY(xIndex, yIndex, rotations, size);
             if ((current == Cube.Positions.OUTSIDE)) {
