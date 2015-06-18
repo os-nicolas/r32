@@ -463,19 +463,12 @@ public class Side {
                 rotatedY = size - 1 - yIndex;
             }
 //        if (Math.abs(offset)>1){//&&flip
-//            if((from == Cube.Positions.LEFT && to == Cube.Positions.OUTSIDE)
-//            ||(to == Cube.Positions.LEFT && from == Cube.Positions.OUTSIDE)){
-//                rotatedX = size - 1 - rotatedX;
-//            }
+            if(( from == Cube.Positions.LEFT && to == Cube.Positions.OUTSIDE)
+            ||( to == Cube.Positions.LEFT && from == Cube.Positions.OUTSIDE)){
+                rotatedX = size - 1 - rotatedX;
+            }
 //        }
 
-            if (current == Cube.Positions.OUTSIDE){
-                rotatedX = size - 1 - rotatedX;
-            }
-
-            if((current == Cube.Positions.OUTSIDE && to == Cube.Positions.LEFT && from == Cube.Positions.OUTSIDE)){
-                rotatedX = size - 1 - rotatedX;
-            }
 
 
         } else if (owner.moveOR(moveY)) {
@@ -489,18 +482,18 @@ public class Side {
                 rotatedY = yIndex;
             }
 //   if (Math.abs(offset)>1) { //&& flip
-//        if ((from == Cube.Positions.TOP && to == Cube.Positions.OUTSIDE)
-//                || (to == Cube.Positions.TOP && from == Cube.Positions.OUTSIDE)) {
-//            rotatedY = size - 1 - rotatedY;
-//        }
-//    }
-            if (current == Cube.Positions.OUTSIDE){
-                rotatedY = size - 1 - rotatedY;
-            }
+        if ( (to == Cube.Positions.TOP && from == Cube.Positions.OUTSIDE) || (from == Cube.Positions.TOP && to == Cube.Positions.OUTSIDE)) {//current == Cube.Positions.OUTSIDE &&from == Cube.Positions.TOP && to == Cube.Positions.OUTSIDE)
 
-            if((current == Cube.Positions.OUTSIDE && to == Cube.Positions.TOP && from == Cube.Positions.OUTSIDE)){
-                rotatedX = size - 1 - rotatedX;
-            }
+            rotatedY = size - 1 - rotatedY;
+        }
+//    }
+//            if (current == Cube.Positions.OUTSIDE){
+//                rotatedY = size - 1 - rotatedY;
+//            }
+//
+//            if((current == Cube.Positions.OUTSIDE && from == Cube.Positions.TOP && to == Cube.Positions.OUTSIDE)){
+//                rotatedX = size - 1 - rotatedX;
+//            }
 
 
         }
