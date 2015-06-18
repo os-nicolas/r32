@@ -398,12 +398,12 @@ public class Cube {
         else if (from == Positions.OUTSIDE && to != Positions.OUTSIDE ) {
             if (inX(to)  ) {
                 return flipXAve(
-                        getSectionPoints(xIndex, yIndex, from, base),
-                        getSectionPoints(size - 1 - xIndex, yIndex, to, base), p);
+                        getSectionPoints(size - 1 - xIndex, yIndex, from, base),
+                        getSectionPoints(xIndex, yIndex, to, base), p);
             } else {
                 return flipYAve(
-                        getSectionPoints(xIndex, yIndex, from, base),
-                        getSectionPoints(xIndex, size - 1 - yIndex, to, base), p);
+                        getSectionPoints(xIndex, size - 1 -yIndex, from, base),
+                        getSectionPoints(xIndex,  yIndex, to, base), p);
             }
         } else if (from != Positions.OUTSIDE && to == Positions.OUTSIDE ) {
             if (inX(from)) {
@@ -416,7 +416,6 @@ public class Cube {
                         getSectionPoints(xIndex, size - 1 - yIndex, to, base), p);
             }
         }
-
 
         else {
 
