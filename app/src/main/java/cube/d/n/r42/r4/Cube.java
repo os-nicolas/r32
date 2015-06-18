@@ -95,48 +95,50 @@ public class Cube {
 
         if (moveX()) {
             //Log.i("moveX","1");
-            draw(base, offsetX);
+            draw(base, offsetX,scrollX,nope(),true);
         } else if (moveY()) {
             //Log.i("moveY","1");
-            draw(base, offsetY);
+            draw(base, offsetY,nope(),scrollY,true);
         } else if (slideX()) {
             //Log.i("slideX","1");
-            slideX(base, offsetX);
+            slideX(base, offsetX,true);
         } else if (slideY()) {
             //Log.i("slideY","1");
-            slideY(base, offsetY);
+            slideY(base, offsetY,true);
         } else if (movingX()) {
             offsetX *= 9f / 10f;
-            if (move(lastScrollX)) {
+            if (moveAND(lastScrollX)) {
                 //Log.i("movingX - draw","1");
-                draw(base, offsetX);
+                draw(base, offsetX,lastScrollX,nope(),false);
             } else {
                 //Log.i("movingX - slide","1");
-                slideX(base, offsetX, lastScrollX);
+                slideX(base, offsetX, lastScrollX,false);
             }
             if (Math.abs(offsetX) < .02) {
                 offsetX = 0;
             }
         } else if (movingY()) {
             offsetY *= 9f / 10f;
-            if (move(lastScrollY)) {
+            if (moveAND(lastScrollY)) {
                 //Log.i("movingY - draw","1");
-                draw(base, offsetY);
+                draw(base, offsetY,nope(),lastScrollY,false);
             } else {
                 //Log.i("movingY - slide","1");
-                slideY(base, offsetY, lastScrollY);
+                slideY(base, offsetY, lastScrollY,false);
             }
             if (Math.abs(offsetY) < .02) {
                 offsetY = 0;
             }
         } else {
             //Log.i("stadnd","1");
-            draw(base, 0);
+            draw(base, 0,nope(),nope(),true);
         }
 
 
         //outside.draw(getPoints(CENTER,CENTER));
     }
+
+
 
     public void setBounds(float left, float top, float right, float bot, DrawInfo base) {
         width = right - left;
@@ -167,7 +169,7 @@ public class Cube {
 //                    slideY(base, offsetY, lastScrollY);
 //                }
 //            } else {
-            s.setBounds(base, 0, top, left, bot, right);
+            s.setBounds(base,top, left, bot, right);
 //            }
 
         }
@@ -270,109 +272,59 @@ public class Cube {
         }
     }
 
-    public void draw(DrawInfo base, float offset) {
+    public void draw(DrawInfo base, float offset,boolean[] myScrollX,boolean[] myScrollY,boolean flip) {
         for (Side s : sides) {
-            s.draw(base, offset);
+            s.draw(base, offset, myScrollX,myScrollY,flip);
         }
 //        sides[0].draw(base, offset);
     }
 
-    private void slideX(DrawInfo base, float offset) {
-        slideX(base, offset, scrollX);
+    private void slideY(DrawInfo base, float offset, boolean[] myScrollY,boolean flip) {
+        for (Side s : sides) {
+            if (inY(s.pos)) {
+                s.drawY(base, offset, myScrollY);
+            } else if ((inLeft(s.pos) && myScrollY[0]) || (
+                    (inRight(s.pos) && myScrollY[size - 1])
+            )) {
+                s.draw(base, offset,nope(),myScrollY,flip);
+            } else {
+                s.draw(base, 0f,nope(),myScrollY,flip);
+            }
+
+        }
     }
 
-    private void slideX(DrawInfo base, float offset, boolean[] scroll) {
+    public boolean[] nope() {
+        boolean[] res = new boolean[size];
+        for (int i=0;i<size;i++){
+            res[i] = false;
+        }
+
+        return res;
+    }
+
+    private void slideX(DrawInfo base, float offset, boolean[] myScrollX,boolean flip) {
         for (Side s : sides) {
             if (inX(s.pos)) {
-                s.drawX(base, offset, scroll);
-            } else if (s.pos == Positions.TOP) {
-                if (scroll[0]) {
-                    s.draw(base, offset);
-                } else {
-                    s.draw(base, 0f);
-                }
-            } else if (s.pos == Positions.BOT) {
-                if (scroll[size - 1]) {
-                    s.draw(base, offset);
-                } else {
-                    s.draw(base, 0f);
-                }
+                s.drawX(base, offset, myScrollX);
             }
-        }
-    }
-
-    private void slideY(DrawInfo base, float offset) {
-        slideY(base, offset, scrollY);
-    }
-
-    private void slideY(DrawInfo base, float offset, boolean[] scroll) {
-        for (Side s : sides) {
-            if (inY(s.pos)
-                    ) {
-                s.drawY(base, offset, scroll);
-            } else if ((inLeft(s.pos) && scroll[0]) || (
-                    (inRight(s.pos) && scroll[size - 1])
+            else if ((inTop(s.pos) && myScrollX[0]) || (
+                    (inBot(s.pos) && myScrollX[size - 1])
             )) {
-                s.draw(base, offset);
+                s.draw(base, offset,myScrollX,nope(),flip);
             } else {
-                s.draw(base, 0f);
+                s.draw(base, 0f,myScrollX,nope(),flip);
             }
-
         }
     }
 
-//    private DrawInfo flip(DrawInfo old) {
-//        DrawInfo result = new DrawInfo(old);
-//        result.topl= new MyPoint(old.botr);
-//        result.topr= new MyPoint(old.botl);
-//        result.botl= new MyPoint(old.topr);
-//        result.botr= new MyPoint(old.topl);
-//        return result;
-//    }
-//
-//    private DrawInfo flipX(DrawInfo old) {
-//        DrawInfo result = new DrawInfo(old);
-//        result.topl= new MyPoint(old.topr);
-//        result.topr= new MyPoint(old.topl);
-//        result.botl= new MyPoint(old.botr);
-//        result.botr= new MyPoint(old.botl);
-//        return result;
-//
-//    }
-//
-//    private DrawInfo getSectionPointsInside(int xIndex, int yIndex, Positions pos, DrawInfo base) {
-//        DrawInfo startWith = getPointsOutside(pos, base);
-//        return getSectionPoints(xIndex,yIndex,startWith,pos);
-//    }
-//
-//    private DrawInfo getSectionPointsOutside(int xIndex, int yIndex,  DrawInfo base) {
-//        DrawInfo result = new DrawInfo(base);
-//        if (xIndex==0 && yIndex==0){
-//            result.topl = new MyPoint(1f/27f-2f/(27f *size),1f/27f-2f/(27f *size));
-//            result.topr = new MyPoint((1f/3f) +1f/((float)size*3f),1f/27f);
-//            result.botl = new MyPoint(1f/27f,(1f/3f) +1f/((float)size*3f));
-//            result.botr = new MyPoint(1f/27f,1f/27f);
-//        }else if (xIndex==size-1 && yIndex==0){
-//            result.topl = new MyPoint((2f/3f) -1f/((float)size*3f),1f/27f);
-//            result.topr = new MyPoint(26f/27f+1f/(27f *size/2f),1f/27f-1f/(27f *size/2f));
-//            result.botl = new MyPoint(26f/27f,1f/27f);
-//            result.botr = new MyPoint(26f/27f,(1f/3f) +1f/((float)size*3f));
-//        }else if (xIndex==0 && yIndex==size-1){
-//            result.topl = new MyPoint(1f/27f,2f/3f - 1f/((float)size*3f));
-//            result.topr = new MyPoint(1f/27f,26f/27f);
-//            result.botl = new MyPoint(1f/27f-1f/(27f *size/2f),26f/27f+1f/(27f *size/2f));
-//            result.botr = new MyPoint((1f/3f) +1f/((float)size*3f),26f/27f);
-//        }else if (xIndex==size-1 && yIndex==size-1){
-//            result.topl = new MyPoint(26f/27f,26f/27f);
-//            result.topr = new MyPoint(26f/27f,(2f/3f) -1f/((float)size*3f));
-//            result.botl = new MyPoint((2f/3f) -1f/((float)size*3f),26f/27f);
-//            result.botr = new MyPoint(26f/27f+1f/(27f *size/2f),26f/27f+1f/(27f *size/2f));
-//        }
-//
-//        //result.upScalePoints();
-//
-//        return result;
-//    }
+    private void slideX(DrawInfo base, float offset,boolean flip) {
+        slideX(base, offset, scrollX,flip);
+    }
+
+    private void slideY(DrawInfo base, float offset,boolean flip) {
+        slideY(base,  offset, scrollY,flip);
+    }
 
     private boolean slideY() {
         for (int i = 0; i < scrollY.length; i++) {
@@ -392,34 +344,33 @@ public class Cube {
         return false;
     }
 
-    public DrawInfo getAve(Positions current, float offset, DrawInfo base, int xIndex, int yIndex) {
+    public DrawInfo getAve(Positions current, float offset, DrawInfo base, int xIndex, int yIndex,boolean[] myScrollX,boolean[] myScrollY) {
         int i = (int) Math.floor(offset);//-1
         int j = (int) Math.ceil(offset);//0
         float p= 1 - (offset - i);
-        //1-(-.1--1)
-        //1+.1-1
-        //.1
 
         Positions from;
         Positions to;
-        if (movingX()) {
+        if (moveOR(myScrollX)) {
             from = getPosMoveX(current, i);
             to = getPosMoveX(current, j);
-        } else if (movingY()) {
+        } else if (moveOR(myScrollY)) {
             from = getPosMoveY(current, i);
             to = getPosMoveY(current, j);
         } else {
-            from = getPosMoveY(current, i);
-            to = getPosMoveY(current, j);
+            if (i!= j) {
+                Log.e("Cube.getAve", "I assume this should only be called with movingX or movingY is true");
+            }
+            from = current;
+            to = current;
         }
-
 
 //        int rotations = getRotations(current,offset);
 //
 //        int rotatedX = Side.rotateX(xIndex,yIndex,rotations,size);
 //        int rotatedY = Side.rotateY(xIndex, yIndex, rotations, size);
 
-        if (clockwise(from,offset)) {
+        if (clockwise(from,myScrollX,myScrollY)) {
             if (offset>0) {
                 return rCAve(
                         getSectionPoints(xIndex, yIndex, from, base),
@@ -430,7 +381,7 @@ public class Cube {
                         getSectionPoints(size - 1 - xIndex, size - 1 - yIndex, to, base), 1-p);
             }
 
-        } else if (counterClockwise(from, offset)) {
+        } else if (counterClockwise(from,myScrollX,myScrollY)) {
             if (offset>0) {
             return rCCAve(
                     getSectionPoints(xIndex, yIndex, from, base),
@@ -443,8 +394,9 @@ public class Cube {
 
         } else if (from == Positions.OUTSIDE && to == Positions.OUTSIDE) {
             return getSectionPoints(xIndex, yIndex, Positions.OUTSIDE, base);
-        } else if (from == Positions.OUTSIDE && to != Positions.OUTSIDE) {
-            if (inX(to)) {
+        }
+        else if (from == Positions.OUTSIDE && to != Positions.OUTSIDE ) {
+            if (inX(to)  ) {
                 return flipXAve(
                         getSectionPoints(xIndex, yIndex, from, base),
                         getSectionPoints(size - 1 - xIndex, yIndex, to, base), p);
@@ -453,7 +405,7 @@ public class Cube {
                         getSectionPoints(xIndex, yIndex, from, base),
                         getSectionPoints(xIndex, size - 1 - yIndex, to, base), p);
             }
-        } else if (from != Positions.OUTSIDE && to == Positions.OUTSIDE) {
+        } else if (from != Positions.OUTSIDE && to == Positions.OUTSIDE ) {
             if (inX(from)) {
                 return flipXAve(
                         getSectionPoints(xIndex, yIndex, from, base),
@@ -463,7 +415,10 @@ public class Cube {
                         getSectionPoints(xIndex, yIndex, from, base),
                         getSectionPoints(xIndex, size - 1 - yIndex, to, base), p);
             }
-        } else {
+        }
+
+
+        else {
 
             return ave(
                     getSectionPoints(xIndex, yIndex, from, base),
@@ -471,80 +426,14 @@ public class Cube {
         }
     }
 
-
-
-    //TODO this is a bit depricated
-    // as in a lot of it's paths will never be called
-    // and share a lot of code wtih the other getAve
-    public DrawInfo getAve(Positions center, float offset, DrawInfo base) {
-        int i = (int) Math.floor(offset);
-        int j = (int) Math.ceil(offset);
-        float p = 1 - (offset - i);
-
-
-        Positions from;
-        Positions to;
-        if (movingX()) {
-            from = getPosMoveX(center, i);
-            to = getPosMoveX(center, j);
-        } else if (movingY()) {
-            from = getPosMoveY(center, i);
-            to = getPosMoveY(center, j);
-
-        } else {
-            from = getPosMoveY(center, i);
-            to = getPosMoveY(center, j);
-        }
-
-        if (clockwise(from, offset)
-                ) {
-            return rCAve(
-                    getPoints(from, base),
-                    getPoints(to, base), p);
-
-        } else if (counterClockwise(from, offset)
-                ) {
-            return rCCAve(
-                    getPoints(from, base),
-                    getPoints(to, base), p);
-
-        } else if (from == Positions.OUTSIDE && to == Positions.OUTSIDE) {
-            return getPoints(Positions.OUTSIDE, base);
-        } else if (from == Positions.OUTSIDE && to != Positions.OUTSIDE) {
-            if (inX(to)) {
-                return flipXAve(
-                        getPoints(from, base),
-                        getPoints(to, base), p);
-            } else {
-                return flipYAve(
-                        getPoints(from, base),
-                        getPoints(to, base), p);
-            }
-        } else if (from != Positions.OUTSIDE && to == Positions.OUTSIDE) {
-            if (inX(from)) {
-                return flipXAve(
-                        getPoints(from, base),
-                        getPoints(to, base), p);
-            } else {
-                return flipYAve(
-                        getPoints(from, base),
-                        getPoints(to, base), p);
-            }
-        } else {
-            return ave(
-                    getPoints(from, base),
-                    getPoints(to, base), p);
-        }
+    private boolean clockwise(Positions current,boolean[] myScrollX, boolean[] myScrollY) {
+        return  (current == Positions.TOP && (myScrollX[0]))  ||
+                (current == Positions.RIGHT && (myScrollY[myScrollY.length-1]));
     }
 
-    private boolean clockwise(Positions current, float offset) {
-        return  current == Positions.TOP && (moveX() || scrollX[0])  ||
-                current == Positions.RIGHT && (moveY() || scrollY[scrollY.length -1]);
-    }
-
-    private boolean counterClockwise(Positions current, float offset) {
-               return (current== Positions.BOT && (moveX() || scrollX[scrollX.length-1]) ) ||
-                (current== Positions.LEFT && (moveY()||scrollY[0]));
+    private boolean counterClockwise(Positions current,boolean[] myScrollX, boolean[] myScrollY) {
+               return (current== Positions.BOT && (myScrollX[myScrollX.length-1]) ) ||
+                (current== Positions.LEFT && (myScrollY[0]));
     }
 
     public boolean movingX() {
@@ -626,25 +515,16 @@ public class Cube {
     }
 
     public Positions getPosMoveX(Positions current, int offset) {
-
-//        while (offset <0){
-//            offset += 6;
-//        }
-
-
         Positions[] centerList1 = {Positions.LEFT, Positions.CENTER, Positions.RIGHT, Positions.OUTSIDE};
 
 
         if (Arrays.asList(centerList1).contains(current)) {
                 for (int i = 0; i < centerList1.length; i++) {
                     if (current == centerList1[i]) {
-                        //we found it
-                        //Log.i("this",offset+"");
                         return centerList1[(i + offset + centerList1.length * 3) % centerList1.length];
                     }
                 }
             }
-
        return current;
     }
 
@@ -795,7 +675,7 @@ public class Cube {
                 pos == Positions.OUTSIDE;
     }
 
-    private DrawInfo getPoints(Positions pos, DrawInfo base) {
+    public DrawInfo getPoints(Positions pos, DrawInfo base) {
         DrawInfo result = new DrawInfo(base);
 
         if (pos == Positions.CENTER) {
@@ -830,16 +710,18 @@ public class Cube {
             result.botr = new MyPoint(8f / 9f, 8f / 9f);
             result.alpha = 0x00;
         }
-        result.topl.x += .005;
-        result.topr.x -= .005;
-        result.botl.x += .005;
-        result.botr.x -= .005;
-        result.topl.y += .005;
-        result.topr.y += .005;
-        result.botl.y -= .005;
-        result.botr.y -= .005;
+//        result.topl.x += .005;
+//        result.topr.x -= .005;
+//        result.botl.x += .005;
+//        result.botr.x -= .005;
+//        result.topl.y += .005;
+//        result.topr.y += .005;
+//        result.botl.y -= .005;
+//        result.botr.y -= .005;
         return result;
     }
+
+    private  final float num = 6;
 
     public void onTouch(MotionEvent event) {
         if (event.getPointerCount() == 1 && (!touchIsDead || event.getAction() == MotionEvent.ACTION_DOWN)) {
@@ -894,16 +776,16 @@ public class Cube {
 
                 if (moveX()) {
                     //calculate offset
-                    offsetX = stickyOffset(((event.getX() - xStartAt) / width) * 4);
+                    offsetX = stickyOffset(((event.getX() - xStartAt) / width) * num);
                 } else if (moveY()) {
                     //calculate offset
-                    offsetY = stickyOffset(((event.getY() - yStartAt) / height) * 4);
+                    offsetY = stickyOffset(((event.getY() - yStartAt) / height) * num);
                 } else if (slideX()) {
                     //calculate offset
-                    offsetX = stickyOffset(((event.getX() - xStartAt) / width) * 4);
+                    offsetX = stickyOffset(((event.getX() - xStartAt) / width) * num);
                 } else if (slideY()) {
                     //calculate offset
-                    offsetY = stickyOffset(((event.getY() - yStartAt) / height) * 4);
+                    offsetY = stickyOffset(((event.getY() - yStartAt) / height) * num);
                 }
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 actionUp(event);
@@ -921,21 +803,22 @@ public class Cube {
         }
         if (moveX()) {
             //calculate offset
-            moveX(false);
 
-            offsetX = stickyOffset(((event.getX() - xStartAt) / width) * 4);
+
+            offsetX = stickyOffset(((event.getX() - xStartAt) / width) * num);
 
             lookAtX(offsetX);
-
+            moveX(false);
 
             offsetX = (float) (offsetX - Math.round(offsetX));
         } else if (moveY()) {
             //calculate offset
-            moveY(false);
 
-            offsetY = stickyOffset(((event.getY() - yStartAt) / height) * 4);
+
+            offsetY = stickyOffset(((event.getY() - yStartAt) / height) * num);
 
             lookAtY(offsetY);
+            moveY(false);
 
             offsetY = (float) (offsetY - Math.round(offsetY));
         } else if (startCenter) {
@@ -943,8 +826,8 @@ public class Cube {
         } else if (slideX()) {
 
 
-            offsetX = stickyOffset(((event.getX() - xStartAt) / width) * 4);
-            int targetOffset = Math.round(offsetX ) ;
+            offsetX = stickyOffset(((event.getX() - xStartAt) / width) * num);
+            int targetOffset = Math.round(offsetX );
             int myScrollX = getScrollX();
 
             rotateX(targetOffset, myScrollX);
@@ -956,7 +839,7 @@ public class Cube {
         } else if (slideY()) {
 
 
-            offsetY = stickyOffset(((event.getY() - yStartAt) / height) * 4);
+            offsetY = stickyOffset(((event.getY() - yStartAt) / height) * num);
             int targetOffset = Math.round(offsetY) ;
             int myScrollY = getScrollY();
 
@@ -983,7 +866,7 @@ public class Cube {
             Positions startedAt = s.pos;
             Positions currentAt = getPosMoveY(s.pos, Math.round(myOffset));
             // handle rotations
-            int rotations = getRotationsY(startedAt, Math.round(myOffset));
+            int rotations = getRotations(startedAt, Math.round(myOffset), nope() ,scrollY);
             s.rotate(-rotations);
 
             if ((currentAt == Positions.OUTSIDE) != (startedAt == Positions.OUTSIDE)) {
@@ -1010,7 +893,7 @@ public class Cube {
             Positions currentAt = getPosMoveX(s.pos, Math.round(myOffset));
 
             // handle rotations
-            int rotations = getRotationsX(startedAt, Math.round(myOffset));
+            int rotations = getRotations(startedAt, Math.round(myOffset), scrollX,nope());
             s.rotate(-rotations);
 
             if ((currentAt == Positions.OUTSIDE) != (startedAt == Positions.OUTSIDE)) {
@@ -1043,7 +926,7 @@ public class Cube {
                     (inBot(s.pos) && myScrollX == size - 1)) {
                 Positions startedAt = s.pos;
                 Positions currentAt = getPosMoveX(s.pos, targetOffset);
-                int rotations = getRotationsX(startedAt, targetOffset);
+                int rotations = getRotations(startedAt, targetOffset, scrollX,nope());
                 s.rotate(-rotations);
                 s.pos = currentAt;
             }
@@ -1084,7 +967,7 @@ public class Cube {
                     || (inRight(s.pos) && myScrollY == size - 1)) {
                 Positions startedAt = s.pos;
                 Positions currentAt = getPosMoveY(s.pos, targetOffset);
-                int rotations = getRotationsY(startedAt, targetOffset);
+                int rotations = getRotations(startedAt, targetOffset,nope(), scrollY);
                 s.rotate(-rotations);
                 s.pos = currentAt;
             }
@@ -1108,7 +991,7 @@ public class Cube {
     }
 
     private boolean inLeft(Positions pos) {
-        return pos == Positions.RIGHT;
+        return pos == Positions.LEFT;
     }
 
     private boolean inBot(Positions pos) {
@@ -1148,85 +1031,43 @@ public class Cube {
         return null;
     }
 
-    public int getRotationsX(Positions startedAt, int offset) {
-        if (counterClockwise(startedAt,offset)){
-            return -Math.abs(offset);
+    public int getRotations(Positions startedAt, int offset, boolean [] myScrollX, boolean [] myScrollY) {
+        if (clockwise(startedAt,myScrollX,myScrollY) ){
+            return offset;
         }
-        if (clockwise(startedAt,offset)){
-            return Math.abs(offset);
-        }
-
-        return 0;
-    }
-
-    public int getRotationsY(Positions startedAt, int offset) {
-        if (counterClockwise(startedAt,offset)){
-            return -Math.abs(offset);
-        }
-        if (clockwise(startedAt,offset)){
-            return Math.abs(offset);
+        if (counterClockwise(startedAt,myScrollX,myScrollY)){
+            return -offset;
         }
 
         return 0;
     }
 
-    public int getRotations(ArrayList<Positions[]> lists, Positions startedAt, Positions endedAt) {
-
-        if (startedAt == endedAt) {
-            return 0;
-        }
-
-        Positions[] array = null;
-
-        for (Positions[] list : lists) {
-            if (contains(list, startedAt) && contains(list, endedAt)) {
-                array = list;
-                break;
-            }
-        }
-
-        if (array == null) {
-            return 0;
-        }
-
-        Positions current = startedAt;
-        int result = 0;
-        while (current != endedAt) {
-            for (int i = 0; i < array.length; i++) {
-                if (array[i] == current) {
-                    Positions next = array[(i + 1) % array.length];
-                    if (clockwise(current, (moveX()? offsetX: offsetY))) {
-                        result++;
-                    }
-                    if (counterClockwise(current, (moveX()? offsetX: offsetY))) {
-                        result--;
-                    }
-                    current = next;
-                    if (current == endedAt) {
-                        break;
-                    }
-                }
-            }
-        }
-        return result;
-
-    }
 
     private boolean moveX() {
-        return move(scrollX);
+        return moveAND(scrollX);
     }
 
     private boolean moveY() {
-        return move(scrollY);
+        return moveAND(scrollY);
     }
 
-    private boolean move(boolean[] myScroll) {
+    public boolean moveAND(boolean[] myScroll) {
         for (int i = 0; i < myScroll.length; i++) {
             if (!myScroll[i]) {
                 return false;
             }
         }
         return true;
+    }
+
+    public boolean moveOR(boolean[] myScroll) {
+        for (int i = 0; i < myScroll.length; i++) {
+            if (myScroll[i]) {
+                return true;
+
+            }
+        }
+        return false;
     }
 
 
@@ -1259,9 +1100,9 @@ public class Cube {
             lookAtX(r.nextInt(6));
             lookAtY(r.nextInt(6));
             if (r.nextBoolean()) {
-                rotateX((r.nextInt(3) + 1) * 2, r.nextInt(size));
+                rotateX((r.nextInt(3) + 1) , r.nextInt(size));
             } else {
-                rotateY((r.nextInt(3) + 1) * 2, r.nextInt(size));
+                rotateY((r.nextInt(3) + 1) , r.nextInt(size));
             }
         }
 
@@ -1273,12 +1114,6 @@ public class Cube {
         float rem = myOffset - flr;
         return (float) (flr + (Math.sin((rem - .5) * Math.PI) / Math.abs(Math.sin((rem - .5) * Math.PI))) * Math.pow(Math.abs(Math.sin((rem - .5) * Math.PI)), .6) / 2 + .5);
     }
-
-//    public float stickyOffset2(float myOffset) {
-//        float flr = (float) Math.floor(myOffset / 2f) * 2f;
-//        float rem = myOffset - flr;
-//        return (float) (flr + (Math.sin((rem - 1) * Math.PI / 2) / Math.abs(Math.sin((rem - 1) * Math.PI / 2))) * Math.pow(Math.abs(Math.sin((rem - 1) * Math.PI / 2)), .8) + 1);
-//    }
 
     public void reset() {
         for (Side s : sides) {
@@ -1293,11 +1128,6 @@ public class Cube {
     public boolean isSpinningY(int x) {
         return scrollY[x];
     }
-
-    private float wrapProgress(float progress) {
-        return ((progress + 6f) % 6f) - 3f;
-    }
-
 
     public enum Positions {
         CENTER,

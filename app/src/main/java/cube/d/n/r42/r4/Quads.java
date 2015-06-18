@@ -38,10 +38,10 @@ public class Quads {
 //        this.tr.x += (this.tr.x<centerX?c:-c);
 //        this.bl.x += (this.bl.x<centerX?c:-c);
 //        this.br.x += (this.br.x<centerX?c:-c);
-//        this.tl.x += normalize((this.tl.x * c2 + (this.tr.x + this.bl.x) / 2f) / (c2 + 1) - this.tl.x);
-//        this.tr.x += normalize((this.tr.x * c2 + (this.tl.x + this.br.x) / 2f) / (c2 + 1) - this.tr.x);
-//        this.bl.x += normalize((this.bl.x * c2 + (this.tl.x + this.br.x) / 2f) / (c2 + 1) - this.bl.x);
-//        this.br.x += normalize((this.br.x * c2 + (this.tr.x + this.bl.x) / 2f) / (c2 + 1) - this.br.x);
+        this.tl.x += normalize((this.tl.x * c2 + (this.tr.x + this.bl.x) / 2f) / (c2 + 1) - this.tl.x);
+        this.tr.x += normalize((this.tr.x * c2 + (this.tl.x + this.br.x) / 2f) / (c2 + 1) - this.tr.x);
+        this.bl.x += normalize((this.bl.x * c2 + (this.tl.x + this.br.x) / 2f) / (c2 + 1) - this.bl.x);
+        this.br.x += normalize((this.br.x * c2 + (this.tr.x + this.bl.x) / 2f) / (c2 + 1) - this.br.x);
 
 
 //        float centerY = (this.tl.y + this.tr.y + this.bl.y + this.br.y)/4f;
@@ -50,10 +50,10 @@ public class Quads {
 //        this.tr.y += (this.tr.y<centerY?c:-c);
 //        this.bl.y += (this.bl.y<centerY?c:-c);
 //        this.br.y += (this.br.y<centerY?c:-c);
-//        this.tl.y += normalize((this.tl.y * c2 + (this.tr.y + this.bl.y) / 2f) / (c2 + 1) - this.tl.y);
-//        this.tr.y += normalize((this.tr.y * c2 + (this.tl.y + this.br.y) / 2f) / (c2 + 1) - this.tr.y);
-//        this.bl.y += normalize((this.bl.y * c2 + (this.tl.y + this.br.y) / 2f) / (c2 + 1) - this.bl.y);
-//        this.br.y += normalize((this.br.y * c2 + (this.tr.y + this.bl.y) / 2f) / (c2 + 1) - this.br.y);
+        this.tl.y += normalize((this.tl.y * c2 + (this.tr.y + this.bl.y) / 2f) / (c2 + 1) - this.tl.y);
+        this.tr.y += normalize((this.tr.y * c2 + (this.tl.y + this.br.y) / 2f) / (c2 + 1) - this.tr.y);
+        this.bl.y += normalize((this.bl.y * c2 + (this.tl.y + this.br.y) / 2f) / (c2 + 1) - this.bl.y);
+        this.br.y += normalize((this.br.y * c2 + (this.tr.y + this.bl.y) / 2f) / (c2 + 1) - this.br.y);
     }
 
     private float normalize(float v) {

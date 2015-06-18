@@ -348,12 +348,12 @@ public class Side {
                 }
                 if (scroll[y]) {
                     if (pos == Cube.Positions.OUTSIDE) {
-                        draw(owner.getAve(pos, offset, base, x, y), data[myX][size - 1 - y]);
+                        draw(owner.getAve(pos, offset, base, x,y, scroll,owner.nope()), data[myX][size - 1 - y]);
                     } else {
-                        draw(owner.getAve(pos, offset, base, x, y), data[myX][y]);
+                        draw(owner.getAve(pos, offset, base, x, y, scroll,owner.nope()), data[myX][y]);
                     }
                 } else {
-                    draw(owner.getAve(pos, 0, base, x, y), data[myX][y]);
+                    draw(owner.getAve(pos, 0, base, x, y, scroll,owner.nope()), data[myX][y]);
                 }
             }
         }
@@ -380,33 +380,31 @@ public class Side {
                 }
                 if (scroll[x]) {
                     if (pos == Cube.Positions.OUTSIDE) {
-                        draw(owner.getAve(pos, offset, base, x, y), data[size - 1 - x][myY]);
+                        draw(owner.getAve(pos, offset, base, x, y,owner.nope(),scroll), data[size - 1 - x][myY]);
                     } else {
 
-                        draw(owner.getAve(pos, offset, base, x, y), data[x][myY]);
+                        draw(owner.getAve(pos, offset, base, x, y,owner.nope(),scroll), data[x][myY]);
                     }
                 } else {
-                    draw(owner.getAve(pos, 0, base, x, y), data[x][myY]);
+                    draw(owner.getAve(pos, 0, base, x, y,owner.nope(),scroll), data[x][myY]);
                 }
             }
         }
     }
 
-    public void draw(DrawInfo base, float offset) {
-
-
+    public void draw(DrawInfo base, float offset,boolean[] scrollX,boolean[] scrollY,boolean flip) {
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
 
-                int cc = getColorCode(pos, offset, x, y);
+                int cc = getColorCode(pos, offset, x, y,scrollX,scrollY,flip);
 
-                draw(owner.getAve(pos, offset, base, x, y), cc);
+                draw(owner.getAve(pos, offset, base, x, y,scrollX,scrollY), cc);
             }
         }
     }
 
-    public void setBounds(DrawInfo base, float offset, float top, float left, float bot, float right) {
-        DrawInfo bounds = owner.getAve(pos, offset, base);
+    public void setBounds(DrawInfo base, float top, float left, float bot, float right) {
+        DrawInfo bounds = owner.getPoints(pos, base);
 
         this.topl.x = left + (bounds.topl.x * (right - left));
         this.topl.y = top + (bounds.topl.y * (bot - top));
@@ -439,7 +437,7 @@ public class Side {
         data = next;
     }
 
-    public int getColorCode(Cube.Positions current, float offset, int xIndex, int yIndex) {
+    public int getColorCode(Cube.Positions current, float offset, int xIndex, int yIndex,boolean[] moveX, boolean[] moveY, boolean flip) {
 
         while (offset < 0) {
             offset += 6;
@@ -454,37 +452,54 @@ public class Side {
         int rotatedX = xIndex;
         int rotatedY = yIndex;
         int rotations;
-        if (owner.movingX()) {
+        if (owner.moveOR(moveX)) {
             from = owner.getPosMoveX(current, i);
-            to = owner.getPosMoveX(current, j);
-            rotations = owner.getRotationsX(current, (int)Math.floor(offset));
+            to = owner.getPosMoveX(current,j);
+            rotations = owner.getRotations(current, (int)Math.floor(offset),moveX,moveY);
             rotatedX = Side.rotateX(xIndex, yIndex, rotations, size);
             rotatedY = Side.rotateY(xIndex, yIndex, rotations, size);
             if ((current == Cube.Positions.OUTSIDE)) {
                 rotatedX = xIndex;
                 rotatedY = size - 1 - yIndex;
             }
+//        if (Math.abs(offset)>1){//&&flip
+//            if((from == Cube.Positions.LEFT && to == Cube.Positions.OUTSIDE)
+//            ||(to == Cube.Positions.LEFT && from == Cube.Positions.OUTSIDE)){
+//                rotatedX = size - 1 - rotatedX;
+//            }
+//        }
 
-            if((from == Cube.Positions.LEFT && to == Cube.Positions.OUTSIDE)
-            ||(to == Cube.Positions.LEFT && from == Cube.Positions.OUTSIDE)){
+            if (current == Cube.Positions.OUTSIDE){
+                rotatedX = size - 1 - rotatedX;
+            }
+
+            if((current == Cube.Positions.OUTSIDE && to == Cube.Positions.LEFT && from == Cube.Positions.OUTSIDE)){
                 rotatedX = size - 1 - rotatedX;
             }
 
 
-        } else if (owner.movingY()) {
+        } else if (owner.moveOR(moveY)) {
             from = owner.getPosMoveY(current, i);
             to = owner.getPosMoveY(current, j);
-            rotations = owner.getRotationsY(current, (int)Math.floor(offset));
+            rotations = owner.getRotations(current, (int)Math.floor(offset),moveX,moveY);
             rotatedX = Side.rotateX(xIndex, yIndex, rotations, size);
             rotatedY = Side.rotateY(xIndex, yIndex, rotations, size);
             if ((current == Cube.Positions.OUTSIDE)) {
                 rotatedX = size - 1 - xIndex;
                 rotatedY = yIndex;
             }
-
-            if((from == Cube.Positions.TOP && to == Cube.Positions.OUTSIDE)
-                    ||(to == Cube.Positions.TOP && from == Cube.Positions.OUTSIDE)){
+//   if (Math.abs(offset)>1) { //&& flip
+//        if ((from == Cube.Positions.TOP && to == Cube.Positions.OUTSIDE)
+//                || (to == Cube.Positions.TOP && from == Cube.Positions.OUTSIDE)) {
+//            rotatedY = size - 1 - rotatedY;
+//        }
+//    }
+            if (current == Cube.Positions.OUTSIDE){
                 rotatedY = size - 1 - rotatedY;
+            }
+
+            if((current == Cube.Positions.OUTSIDE && to == Cube.Positions.TOP && from == Cube.Positions.OUTSIDE)){
+                rotatedX = size - 1 - rotatedX;
             }
 
 
