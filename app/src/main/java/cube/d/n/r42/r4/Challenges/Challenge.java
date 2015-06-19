@@ -95,6 +95,42 @@ public abstract class Challenge {
         t = new C_2_12();
         challenges.put(t.getSp_key(), t);
 
+        t = new C_3_1();
+        challenges.put(t.getSp_key(), t);
+
+        t = new C_3_2();
+        challenges.put(t.getSp_key(), t);
+
+        t = new C_3_3();
+        challenges.put(t.getSp_key(), t);
+
+        t = new C_3_4();
+        challenges.put(t.getSp_key(), t);
+
+        t = new C_3_5();
+        challenges.put(t.getSp_key(), t);
+
+        t = new C_3_6();
+        challenges.put(t.getSp_key(), t);
+
+        t = new C_3_7();
+        challenges.put(t.getSp_key(), t);
+
+        t = new C_3_8();
+        challenges.put(t.getSp_key(), t);
+
+        t = new C_3_9();
+        challenges.put(t.getSp_key(), t);
+
+        t = new C_3_10();
+        challenges.put(t.getSp_key(), t);
+
+        t = new C_3_11();
+        challenges.put(t.getSp_key(), t);
+
+        t = new C_3_12();
+        challenges.put(t.getSp_key(), t);
+
     }
     public ChallengeActivity myActivity = null;
     private ChallengeMap challengeMap = new ChallengeMap();

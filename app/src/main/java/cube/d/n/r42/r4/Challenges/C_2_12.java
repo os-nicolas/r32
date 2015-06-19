@@ -8,7 +8,7 @@ import cube.d.n.r42.r4.Cube;
 public class C_2_12 extends Challenge {
     @Override
     public String getSp_key() {
-        return "c_2_12";
+        return "r3_2_12";
     }
 
     @Override

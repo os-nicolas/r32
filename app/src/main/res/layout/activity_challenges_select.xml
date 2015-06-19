@@ -183,6 +183,75 @@
 
 
                 </LinearLayout>
+
+                <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+                    android:layout_weight="1" android:orientation="vertical">
+
+                    <TextView android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" android:layout_weight="1"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="Moves"
+                        android:textColor="#ffffff"/>
+
+                    <com.xgc1986.ripplebutton.widget.RippleButton android:id="@+id/c_3_1" android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"  android:text="1"                 app:rippleColor="#bbbbbb"
+                        app:buttonColor="#ffffff"
+                        android:textColor="#000000"/>
+
+                    <com.xgc1986.ripplebutton.widget.RippleButton android:id="@+id/c_3_2" android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="2"                 app:rippleColor="#bbbbbb"
+                        app:buttonColor="#ffffff"
+                        android:textColor="#000000"/>
+
+                    <com.xgc1986.ripplebutton.widget.RippleButton android:id="@+id/c_3_3" android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"  android:text="3"                 app:rippleColor="#bbbbbb"
+                        app:buttonColor="#ffffff"
+                        android:textColor="#000000"/>
+
+                    <com.xgc1986.ripplebutton.widget.RippleButton android:id="@+id/c_3_4" android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"  android:text="4"                 app:rippleColor="#bbbbbb"
+                        app:buttonColor="#ffffff"
+                        android:textColor="#000000"/>
+                    <com.xgc1986.ripplebutton.widget.RippleButton android:id="@+id/c_3_5" android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"  android:text="5"                 app:rippleColor="#bbbbbb"
+                        app:buttonColor="#ffffff"
+                        android:textColor="#000000"/>
+                    <com.xgc1986.ripplebutton.widget.RippleButton android:id="@+id/c_3_6" android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"  android:text="6"                 app:rippleColor="#bbbbbb"
+                        app:buttonColor="#ffffff"
+                        android:textColor="#000000"/>
+
+                    <com.xgc1986.ripplebutton.widget.RippleButton android:id="@+id/c_3_7" android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" android:text="7"                 app:rippleColor="#bbbbbb"
+                        app:buttonColor="#ffffff"
+                        android:textColor="#000000"/>
+
+                    <com.xgc1986.ripplebutton.widget.RippleButton android:id="@+id/c_3_8" android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"  android:text="8"                 app:rippleColor="#bbbbbb"
+                        app:buttonColor="#ffffff"
+                        android:textColor="#000000"/>
+
+                    <com.xgc1986.ripplebutton.widget.RippleButton android:id="@+id/c_3_9" android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" android:text="9"                 app:rippleColor="#bbbbbb"
+                        app:buttonColor="#ffffff"
+                        android:textColor="#000000"/>
+
+                    <com.xgc1986.ripplebutton.widget.RippleButton android:id="@+id/c_3_10" android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"  android:text="10"                 app:rippleColor="#bbbbbb"
+                        app:buttonColor="#ffffff"
+                        android:textColor="#000000"/>
+                    <com.xgc1986.ripplebutton.widget.RippleButton android:id="@+id/c_3_11" android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" android:text="11"                 app:rippleColor="#bbbbbb"
+                        app:buttonColor="#ffffff"
+                        android:textColor="#000000"/>
+                    <com.xgc1986.ripplebutton.widget.RippleButton android:id="@+id/c_3_12" android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" android:text="12"                 app:rippleColor="#bbbbbb"
+                        app:buttonColor="#ffffff"
+                        android:textColor="#000000"/>
+
+
+                </LinearLayout>
             </LinearLayout>
 
         </ScrollView>

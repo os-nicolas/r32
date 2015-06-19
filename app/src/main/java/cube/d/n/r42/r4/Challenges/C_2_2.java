@@ -9,16 +9,16 @@ import cube.d.n.r42.r4.Cube;
 public class C_2_2 extends Challenge {
     @Override
     public String getSp_key() {
-        return "c_2_2";
+        return "r3_2_2";
     }
 
     @Override
     protected Cube privateInitChallange() {
         Cube result = new Cube(3);
-        result.rotateY(2, 0);
+        result.rotateY(1, 0);
         result.lookAtY(1);
         result.lookAtX(1);
-        result.rotateX(2, 2);
+        result.rotateX(1, 2);
         return result;
     }
 }

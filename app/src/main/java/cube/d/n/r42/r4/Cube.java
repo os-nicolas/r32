@@ -144,33 +144,8 @@ public class Cube {
         width = right - left;
         height = bot - top;
         for (Side s : sides) {
-//            if (moveX()) {
-//                draw(base, offsetX);
-//            } else if (moveY()) {
-//                draw(base, offsetY);
-//            } else if (slideX()) {
-//                slideX(base, offsetX);
-//            } else if (slideY()) {
-//                slideY(base, offsetY);
-//            } else if (movingX()) {
-//                offsetX *= 4f / 5f;
-//                if (move(lastScrollX)) {
-//                    draw(base, offsetX);
-//                }else {
-//                    slideX(base, offsetX,lastScrollX);
-//                }
-//                if (offsetX <.1){
-//                    offsetX=0;
-//                }
-//            } else if (movingY()) {
-//                if (move(lastScrollY)) {
-//                    draw(base, offsetY);
-//                }else {
-//                    slideY(base, offsetY, lastScrollY);
-//                }
-//            } else {
+
             s.setBounds(base,top, left, bot, right);
-//            }
 
         }
     }
@@ -709,14 +684,19 @@ public class Cube {
             result.botr = new MyPoint(8f / 9f, 8f / 9f);
             result.alpha = 0x00;
         }
-//        result.topl.x += .005;
-//        result.topr.x -= .005;
-//        result.botl.x += .005;
-//        result.botr.x -= .005;
-//        result.topl.y += .005;
-//        result.topr.y += .005;
-//        result.botl.y -= .005;
-//        result.botr.y -= .005;
+        if (pos==Positions.CENTER || pos == Positions.OUTSIDE || pos == Positions.TOP || pos == Positions.BOT){
+            result.topl.x += .005;
+            result.topr.x -= .005;
+            result.botl.x += .005;
+            result.botr.x -= .005;
+        }
+
+        if (pos==Positions.CENTER || pos == Positions.OUTSIDE || pos == Positions.LEFT || pos == Positions.RIGHT) {
+            result.topl.y += .005;
+            result.topr.y += .005;
+            result.botl.y -= .005;
+            result.botr.y -= .005;
+        }
         return result;
     }
 
@@ -859,13 +839,20 @@ public class Cube {
         }
     }
 
-
     public void lookAtY(float myOffset) {
+        boolean[] scroll = new boolean[size];
+        for (int i=0;i<size;i++){
+            scroll[i]=true;
+        }
+        lookAtY(myOffset,scroll);
+    }
+
+    public void lookAtY(float myOffset,boolean[] scroll) {
         for (Side s : sides) {
             Positions startedAt = s.pos;
             Positions currentAt = getPosMoveY(s.pos, Math.round(myOffset));
             // handle rotations
-            int rotations = getRotations(startedAt, Math.round(myOffset), nope() ,scrollY);
+            int rotations = getRotations(startedAt, Math.round(myOffset), nope() ,scroll);
             s.rotate(-rotations);
 
             if ((currentAt == Positions.OUTSIDE) != (startedAt == Positions.OUTSIDE)) {
@@ -887,12 +874,21 @@ public class Cube {
     }
 
     public void lookAtX(float myOffset) {
+        boolean[] scroll = new boolean[size];
+        for (int i=0;i<size;i++){
+            scroll[i]=true;
+        }
+        lookAtX(myOffset,scroll);
+    }
+
+
+    public void lookAtX(float myOffset,boolean[] scroll) {
         for (Side s : sides) {
             Positions startedAt = s.pos;
             Positions currentAt = getPosMoveX(s.pos, Math.round(myOffset));
 
             // handle rotations
-            int rotations = getRotations(startedAt, Math.round(myOffset), scrollX,nope());
+            int rotations = getRotations(startedAt, Math.round(myOffset), scroll,nope());
             s.rotate(-rotations);
 
             if ((currentAt == Positions.OUTSIDE) != (startedAt == Positions.OUTSIDE)) {
@@ -904,6 +900,15 @@ public class Cube {
     }
 
     public void rotateX(int targetOffset, int myScrollX) {
+        boolean[] scroll = new boolean[size];
+        for (int i=0;i<size;i++){
+            scroll[i] = myScrollX==i;
+        }
+        rotateX(targetOffset,myScrollX,scroll);
+
+    }
+
+    public void rotateX(int targetOffset, int myScrollX,boolean[] scroll) {
         Log.d("I rotated","X");
         HashMap<Side, int[]> newData = new HashMap<Side, int[]>();
 
@@ -925,7 +930,7 @@ public class Cube {
                     (inBot(s.pos) && myScrollX == size - 1)) {
                 Positions startedAt = s.pos;
                 Positions currentAt = getPosMoveX(s.pos, targetOffset);
-                int rotations = getRotations(startedAt, targetOffset, scrollX,nope());
+                int rotations = getRotations(startedAt, targetOffset, scroll,nope());
                 s.rotate(-rotations);
                 s.pos = currentAt;
             }
@@ -944,7 +949,16 @@ public class Cube {
         }
     }
 
-    public void rotateY(int targetOffset, int myScrollY) {
+    public void rotateY(int targetOffset, int myScrollX) {
+        boolean[] scroll = new boolean[size];
+        for (int i=0;i<size;i++){
+            scroll[i] = myScrollX==i;
+        }
+        rotateY(targetOffset,myScrollX,scroll);
+
+    }
+
+    public void rotateY(int targetOffset, int myScrollY,boolean[] scroll) {
 
         Log.d("I rotated","Y");
         HashMap<Side, int[]> newData = new HashMap<Side, int[]>();
@@ -966,7 +980,7 @@ public class Cube {
                     || (inRight(s.pos) && myScrollY == size - 1)) {
                 Positions startedAt = s.pos;
                 Positions currentAt = getPosMoveY(s.pos, targetOffset);
-                int rotations = getRotations(startedAt, targetOffset,nope(), scrollY);
+                int rotations = getRotations(startedAt, targetOffset,nope(), scroll);
                 s.rotate(-rotations);
                 s.pos = currentAt;
             }
@@ -1021,7 +1035,7 @@ public class Cube {
         return -1;
     }
 
-    private Side get(Positions currentAt) {
+    public Side get(Positions currentAt) {
         for (Side s : sides) {
             if (s.pos == currentAt) {
                 return s;
@@ -1126,6 +1140,15 @@ public class Cube {
 
     public boolean isSpinningY(int x) {
         return scrollY[x];
+    }
+
+    public void grey() {
+        sides[0].grey();
+        sides[1].grey();
+        sides[2].grey();
+        sides[3].grey();
+        sides[4].grey();
+        sides[5].grey();
     }
 
     public enum Positions {

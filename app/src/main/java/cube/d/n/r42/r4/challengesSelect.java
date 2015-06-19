@@ -44,102 +44,151 @@ public class challengesSelect extends Activity {
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
 
-        Button c_1_1 = (Button) findViewById(R.id.c_1_1);
-        c_1_1.setOnClickListener(factory(1, 1, this));
-        bz.put(c_1_1, new Integer[]{1, 1});
+        Button b;
 
-        Button c_1_2 = (Button) findViewById(R.id.c_1_2);
-        c_1_2.setOnClickListener(factory(1, 2, this));
-        bz.put(c_1_2, new Integer[]{1, 2});
+        b = (Button) findViewById(R.id.c_1_1);
+        b.setOnClickListener(factory(1, 1, this));
+        bz.put(b, new Integer[]{1, 1});
 
-        Button c_1_3 = (Button) findViewById(R.id.c_1_3);
-        c_1_3.setOnClickListener(factory(1, 3, this));
-        bz.put(c_1_3, new Integer[]{1, 3});
+        b = (Button) findViewById(R.id.c_1_2);
+        b.setOnClickListener(factory(1, 2, this));
+        bz.put(b, new Integer[]{1, 2});
 
-        Button c_1_4 = (Button) findViewById(R.id.c_1_4);
-        c_1_4.setOnClickListener(factory(1, 4, this));
-        bz.put(c_1_4, new Integer[]{1, 4});
+        b = (Button) findViewById(R.id.c_1_3);
+        b.setOnClickListener(factory(1, 3, this));
+        bz.put(b, new Integer[]{1, 3});
 
-        Button c_1_5 = (Button) findViewById(R.id.c_1_5);
-        c_1_5.setOnClickListener(factory(1, 5, this));
-        bz.put(c_1_5, new Integer[]{1, 5});
+        b = (Button) findViewById(R.id.c_1_4);
+        b.setOnClickListener(factory(1, 4, this));
+        bz.put(b, new Integer[]{1, 4});
 
-        Button c_1_6 = (Button) findViewById(R.id.c_1_6);
-        c_1_6.setOnClickListener(factory(1, 6, this));
-        bz.put(c_1_6, new Integer[]{1, 6});
+        b = (Button) findViewById(R.id.c_1_5);
+        b.setOnClickListener(factory(1, 5, this));
+        bz.put(b, new Integer[]{1, 5});
 
-        Button c_1_7 = (Button) findViewById(R.id.c_1_7);
-        c_1_7.setOnClickListener(factory(1, 7, this));
-        bz.put(c_1_7, new Integer[]{1, 7});
+        b = (Button) findViewById(R.id.c_1_6);
+        b.setOnClickListener(factory(1, 6, this));
+        bz.put(b, new Integer[]{1, 6});
 
-        Button c_1_8 = (Button) findViewById(R.id.c_1_8);
-        c_1_8.setOnClickListener(factory(1, 8, this));
-        bz.put(c_1_8, new Integer[]{1, 8});
+        b = (Button) findViewById(R.id.c_1_7);
+        b.setOnClickListener(factory(1, 7, this));
+        bz.put(b, new Integer[]{1, 7});
 
-        Button c_1_9 = (Button) findViewById(R.id.c_1_9);
-        c_1_9.setOnClickListener(factory(1, 9, this));
-        bz.put(c_1_9, new Integer[]{1, 9});
+        b = (Button) findViewById(R.id.c_1_8);
+        b.setOnClickListener(factory(1, 8, this));
+        bz.put(b, new Integer[]{1, 8});
 
-        Button c_1_10 = (Button) findViewById(R.id.c_1_10);
-        c_1_10.setOnClickListener(factory(1, 10, this));
-        bz.put(c_1_10, new Integer[]{1, 10});
+        b = (Button) findViewById(R.id.c_1_9);
+        b.setOnClickListener(factory(1, 9, this));
+        bz.put(b, new Integer[]{1, 9});
 
-        Button c_1_11 = (Button) findViewById(R.id.c_1_11);
-        c_1_11.setOnClickListener(factory(1, 11, this));
-        bz.put(c_1_11, new Integer[]{1, 11});
+        b = (Button) findViewById(R.id.c_1_10);
+        b.setOnClickListener(factory(1, 10, this));
+        bz.put(b, new Integer[]{1, 10});
 
-        Button c_1_12 = (Button) findViewById(R.id.c_1_12);
-        c_1_12.setOnClickListener(factory(1, 12, this));
-        bz.put(c_1_12, new Integer[]{1, 12});
+        b = (Button) findViewById(R.id.c_1_11);
+        b.setOnClickListener(factory(1, 11, this));
+        bz.put(b, new Integer[]{1, 11});
 
-        Button c_2_1 = (Button) findViewById(R.id.c_2_1);
-        c_2_1.setOnClickListener(factory(2, 1, this));
-        bz.put(c_2_1, new Integer[]{2, 1});
+        b = (Button) findViewById(R.id.c_1_12);
+        b.setOnClickListener(factory(1, 12, this));
+        bz.put(b, new Integer[]{1, 12});
 
-        Button c_2_2 = (Button) findViewById(R.id.c_2_2);
-        c_2_2.setOnClickListener(factory(2, 2, this));
-        bz.put(c_2_2, new Integer[]{2, 2});
+        b = (Button) findViewById(R.id.c_2_1);
+        b.setOnClickListener(factory(2, 1, this));
+        bz.put(b, new Integer[]{2, 1});
 
-        Button c_2_3 = (Button) findViewById(R.id.c_2_3);
-        c_2_3.setOnClickListener(factory(2, 3, this));
-        bz.put(c_2_3, new Integer[]{2, 3});
+        b = (Button) findViewById(R.id.c_2_2);
+        b.setOnClickListener(factory(2, 2, this));
+        bz.put(b, new Integer[]{2, 2});
 
-        Button c_2_4 = (Button) findViewById(R.id.c_2_4);
-        c_2_4.setOnClickListener(factory(2, 4, this));
-        bz.put(c_2_4, new Integer[]{2, 4});
+        b = (Button) findViewById(R.id.c_2_3);
+        b.setOnClickListener(factory(2, 3, this));
+        bz.put(b, new Integer[]{2, 3});
 
-        Button c_2_5 = (Button) findViewById(R.id.c_2_5);
-        c_2_5.setOnClickListener(factory(2, 5, this));
-        bz.put(c_2_5, new Integer[]{2, 5});
+        b = (Button) findViewById(R.id.c_2_4);
+        b.setOnClickListener(factory(2, 4, this));
+        bz.put(b, new Integer[]{2, 4});
 
-        Button c_2_6 = (Button) findViewById(R.id.c_2_6);
-        c_2_6.setOnClickListener(factory(2, 6, this));
-        bz.put(c_2_6, new Integer[]{2, 6});
+        b = (Button) findViewById(R.id.c_2_5);
+        b.setOnClickListener(factory(2, 5, this));
+        bz.put(b, new Integer[]{2, 5});
 
-        Button c_2_7 = (Button) findViewById(R.id.c_2_7);
-        c_2_7.setOnClickListener(factory(2, 7, this));
-        bz.put(c_2_7, new Integer[]{2, 7});
+        b = (Button) findViewById(R.id.c_2_6);
+        b.setOnClickListener(factory(2, 6, this));
+        bz.put(b, new Integer[]{2, 6});
 
-        Button c_2_8 = (Button) findViewById(R.id.c_2_8);
-        c_2_8.setOnClickListener(factory(2, 8, this));
-        bz.put(c_2_8, new Integer[]{2, 8});
+        b = (Button) findViewById(R.id.c_2_7);
+        b.setOnClickListener(factory(2, 7, this));
+        bz.put(b, new Integer[]{2, 7});
 
-        Button c_2_9 = (Button) findViewById(R.id.c_2_9);
-        c_2_9.setOnClickListener(factory(2, 9, this));
-        bz.put(c_2_9, new Integer[]{2, 9});
+        b = (Button) findViewById(R.id.c_2_8);
+        b.setOnClickListener(factory(2, 8, this));
+        bz.put(b, new Integer[]{2, 8});
 
-        Button c_2_10 = (Button) findViewById(R.id.c_2_10);
-        c_2_10.setOnClickListener(factory(2, 10, this));
-        bz.put(c_2_10, new Integer[]{2, 10});
+        b = (Button) findViewById(R.id.c_2_9);
+        b.setOnClickListener(factory(2, 9, this));
+        bz.put(b, new Integer[]{2, 9});
 
-        Button c_2_11 = (Button) findViewById(R.id.c_2_11);
-        c_2_11.setOnClickListener(factory(2, 11, this));
-        bz.put(c_2_11, new Integer[]{2, 11});
+        b = (Button) findViewById(R.id.c_2_10);
+        b.setOnClickListener(factory(2, 10, this));
+        bz.put(b, new Integer[]{2, 10});
 
-        Button c_2_12 = (Button) findViewById(R.id.c_2_12);
-        c_2_12.setOnClickListener(factory(2, 12, this));
-        bz.put(c_2_12, new Integer[]{2, 12});
+        b = (Button) findViewById(R.id.c_2_11);
+        b.setOnClickListener(factory(2, 11, this));
+        bz.put(b, new Integer[]{2, 11});
 
+        b = (Button) findViewById(R.id.c_2_12);
+        b.setOnClickListener(factory(2, 12, this));
+        bz.put(b, new Integer[]{2, 12});
+
+        b = (Button) findViewById(R.id.c_3_1);
+        b.setOnClickListener(factory(3, 1, this));
+        bz.put(b, new Integer[]{3, 1});
+
+        b = (Button) findViewById(R.id.c_3_2);
+        b.setOnClickListener(factory(3, 2, this));
+        bz.put(b, new Integer[]{3, 2});
+
+        b = (Button) findViewById(R.id.c_3_3);
+        b.setOnClickListener(factory(3, 3, this));
+        bz.put(b, new Integer[]{3, 3});
+
+        b = (Button) findViewById(R.id.c_3_4);
+        b.setOnClickListener(factory(3, 4, this));
+        bz.put(b, new Integer[]{3, 4});
+
+        b = (Button) findViewById(R.id.c_3_5);
+        b.setOnClickListener(factory(3, 5, this));
+        bz.put(b, new Integer[]{3, 5});
+
+        b = (Button) findViewById(R.id.c_3_6);
+        b.setOnClickListener(factory(3, 6, this));
+        bz.put(b, new Integer[]{3, 6});
+
+        b = (Button) findViewById(R.id.c_3_7);
+        b.setOnClickListener(factory(3, 7, this));
+        bz.put(b, new Integer[]{3, 7});
+
+        b = (Button) findViewById(R.id.c_3_8);
+        b.setOnClickListener(factory(3, 8, this));
+        bz.put(b, new Integer[]{3, 8});
+
+        b = (Button) findViewById(R.id.c_3_9);
+        b.setOnClickListener(factory(3, 9, this));
+        bz.put(b, new Integer[]{3, 9});
+
+        b = (Button) findViewById(R.id.c_3_10);
+        b.setOnClickListener(factory(3, 10, this));
+        bz.put(b, new Integer[]{3, 10});
+
+        b = (Button) findViewById(R.id.c_3_11);
+        b.setOnClickListener(factory(3, 11, this));
+        bz.put(b, new Integer[]{3, 11});
+
+        b = (Button) findViewById(R.id.c_3_12);
+        b.setOnClickListener(factory(3, 12, this));
+        bz.put(b, new Integer[]{3, 12});
 
     }
 
@@ -149,7 +198,7 @@ public class challengesSelect extends Activity {
             public void onClick(View v) {
                 if (unlocked(clmn, rw)) {
                     Intent myIntent = new Intent(that, ChallengeActivity.class);
-                    myIntent.putExtra("KEY", "c_" + clmn + "_" + rw);
+                    myIntent.putExtra("KEY", "r3_" + clmn + "_" + rw);
                     that.startActivity(myIntent);
                 }
             }
@@ -160,7 +209,7 @@ public class challengesSelect extends Activity {
         if (rw == 1) {
             return true;
         }
-        return Challenge.getChallenge("c_" + clmn + "_" + (rw - 1)).hasSolved();
+        return Challenge.getChallenge("r3_" + clmn + "_" + (rw - 1)).hasSolved();
     }
 
 

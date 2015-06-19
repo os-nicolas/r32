@@ -4,20 +4,44 @@ import android.graphics.Color;
 import android.util.Log;
 import android.view.MotionEvent;
 
-import java.lang.Math;import java.util.Random;
+import java.lang.Math;
+import java.util.HashMap;
+import java.util.Random;
 
 /**
  * Created by Colin_000 on 4/2/2015.
  */
 public class Side {
-    static int[] colors = {
-            0xffff0000, 0xffff7286,
-            0xffff7700, 0xffffff00,
-            0xff008000, 0xff00ff00,
-            0xff0000ff, 0xff72d9ff,
-            0xff9900cc, 0xffcc66ff,
-            0xffffffff, 0xff323232
+    public static int[] colors = { 0xffb71234 //red
+            ,0xffffffff //white
+            ,0xff009b48 // green
+            ,0xff0046ad // blue
+            ,0xffffd500 // yellow
+            ,0xffff5800 //orange
+            ,0xffAAAAAA
     };
+
+    public static int sideToColor(Cube.Positions pos){
+        HashMap<Cube.Positions,Integer> backend = new HashMap<Cube.Positions,Integer>();
+        backend.put(Cube.Positions.CENTER, new Integer(0));
+        backend.put(Cube.Positions.TOP, new Integer(1));
+        backend.put(Cube.Positions.LEFT, new Integer(2));
+        backend.put(Cube.Positions.RIGHT, new Integer(3));
+        backend.put(Cube.Positions.BOT, new Integer(4));
+        backend.put(Cube.Positions.OUTSIDE, new Integer(5));
+
+        return backend.get(pos);
+    }
+
+
+//    static int[] colors = {
+//            0xffff0000, 0xffff7286,
+//            0xffff7700, 0xffffff00,
+//            0xff008000, 0xff00ff00,
+//            0xff0000ff, 0xff72d9ff,
+//            0xff9900cc, 0xffcc66ff,
+//            0xffffffff, 0xff323232
+//    };
     public final int size;
     // I think this is like 1-12
     public final int id;
@@ -504,16 +528,51 @@ public class Side {
     }
 
     public boolean isSolved() {
-        int last = data[0][0];
         for (int[] dat : data) {
             for (int da : dat) {
-                if (last != da) {
-                    return false;
+                if (da != 6){
+                    if (onOtherSides(da)){
+                        return false;
+                    }
                 }
             }
         }
         return true;
 
+
+//        int last = data[0][0];
+//        for (int[] dat : data) {
+//            for (int da : dat) {
+//                if (last != da) {
+//                    return false;
+//                }
+//            }
+//        }
+//        return true;
+
+    }
+
+    private boolean onOtherSides(int da) {
+        for (Side s: owner.sides){
+            if (!s.equals(this)){
+                if (s.contains(da)){
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private boolean contains(int da) {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if ( data[i][j] == da){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public void reset() {
@@ -552,5 +611,15 @@ public class Side {
             }
         }
 
+    }
+
+    public void grey() {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                //if (!(i==1&&j==1)) {
+                    data[i][j] = 6;//r.nextInt(12);//
+                //}
+            }
+        }
     }
 }

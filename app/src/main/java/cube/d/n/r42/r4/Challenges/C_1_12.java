@@ -9,7 +9,7 @@ public class C_1_12 extends Challenge {
 
     @Override
     public String getSp_key() {
-        return "c_1_12";
+        return "r3_1_12";
     }
 
     @Override

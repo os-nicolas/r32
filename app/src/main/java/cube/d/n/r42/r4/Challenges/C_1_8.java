@@ -10,16 +10,16 @@ public class C_1_8 extends Challenge {
 
     @Override
     public String getSp_key() {
-        return "c_1_8";
+        return "r3_1_8";
     }
 
     @Override
     protected Cube privateInitChallange() {
         Cube result = new Cube(2);
-        result.rotateY(2, 0);
-        result.rotateX(2, 0);
-        result.rotateX(-2, 1);
-        result.rotateY(-2, 1);
+        result.rotateY(1, 0);
+        result.rotateX(1, 0);
+        result.rotateX(-1, 1);
+        result.rotateY(-1, 1);
         return result;
     }
 

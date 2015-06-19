@@ -86,7 +86,7 @@ public class ChallengeActivity extends Activity {
             left.setEnabled(false);
             ((RippleButton)left).setColors(0xff888888, 0xff666666);
         }
-        if (!Challenge.getChallenge("c_" + column + "_" + (row)).hasSolved()) {
+        if (!Challenge.getChallenge("r3_" + column + "_" + (row)).hasSolved()) {
             ((RippleButton)right).setColors(0xff888888, 0xff666666);
             right.setEnabled(false);
         }
@@ -114,7 +114,7 @@ public class ChallengeActivity extends Activity {
     private void right() {
         final Activity that = this;
         Intent myIntent = new Intent(that, ChallengeActivity.class);
-        myIntent.putExtra("KEY", "c_" + column + "_" + (row + 1));
+        myIntent.putExtra("KEY", "r3_" + column + "_" + (row + 1));
         that.startActivity(myIntent);
         finish();
     }
@@ -122,7 +122,7 @@ public class ChallengeActivity extends Activity {
     private void left() {
         final Activity that = this;
         Intent myIntent = new Intent(that, ChallengeActivity.class);
-        myIntent.putExtra("KEY", "c_" + column + "_" + (row - 1));
+        myIntent.putExtra("KEY", "r3_" + column + "_" + (row - 1));
         that.startActivity(myIntent);
         finish();
     }
