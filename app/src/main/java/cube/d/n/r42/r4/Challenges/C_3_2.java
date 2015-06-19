@@ -18,9 +18,13 @@ public class C_3_2 extends Challenge {
         result.grey();
         result.get(Cube.Positions.LEFT).data[1][1] = Side.sideToColor(Cube.Positions.LEFT);
         result.get(Cube.Positions.CENTER).data[1][1] = Side.sideToColor(Cube.Positions.CENTER);
-        result.get(Cube.Positions.RIGHT).data[1][1] = Side.sideToColor(Cube.Positions.CENTER);
-        result.get(Cube.Positions.CENTER).data[1][2] = Side.sideToColor(Cube.Positions.LEFT);
-        result.get(Cube.Positions.BOT).data[2][1] = Side.sideToColor(Cube.Positions.CENTER);
+        result.get(Cube.Positions.TOP).data[1][1] = Side.sideToColor(Cube.Positions.TOP);
+
+        result.get(Cube.Positions.LEFT).data[2][1] = Side.sideToColor(Cube.Positions.LEFT);
+        result.get(Cube.Positions.CENTER).data[0][1] = Side.sideToColor(Cube.Positions.CENTER);
+
+        result.get(Cube.Positions.LEFT).data[1][2] = Side.sideToColor(Cube.Positions.TOP);
+        result.get(Cube.Positions.BOT).data[0][1] = Side.sideToColor(Cube.Positions.CENTER);
         return result;
     }
 }
