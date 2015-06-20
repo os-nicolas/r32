@@ -48,7 +48,7 @@ public class C_3_9 extends Challenge {
         result.get(Cube.Positions.CENTER).data[2][2] = Side.sideToColor(Cube.Positions.CENTER);
 
         result.get(Cube.Positions.RIGHT).data[2][1] = Side.sideToColor(Cube.Positions.LEFT);
-        result.get(Cube.Positions.OUTSIDE).data[2][1] = Side.sideToColor(Cube.Positions.TOP);
+        result.get(Cube.Positions.OUTSIDE).data[0][1] = Side.sideToColor(Cube.Positions.TOP);
 
         return result;
     }

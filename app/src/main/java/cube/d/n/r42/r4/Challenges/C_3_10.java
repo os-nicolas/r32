@@ -50,7 +50,7 @@ public class C_3_10 extends Challenge {
         result.get(Cube.Positions.CENTER).data[2][2] = Side.sideToColor(Cube.Positions.CENTER);
 
         result.get(Cube.Positions.LEFT).data[0][1] = Side.sideToColor(Cube.Positions.BOT);
-        result.get(Cube.Positions.OUTSIDE).data[0][1] = Side.sideToColor(Cube.Positions.LEFT);
+        result.get(Cube.Positions.OUTSIDE).data[2][1] = Side.sideToColor(Cube.Positions.LEFT);
         return result;
     }
 }

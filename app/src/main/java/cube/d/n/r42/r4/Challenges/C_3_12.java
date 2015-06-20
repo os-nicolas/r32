@@ -52,15 +52,15 @@ public class C_3_12 extends Challenge {
         result.get(Cube.Positions.BOT).data[0][0] = Side.sideToColor(Cube.Positions.BOT);
         result.get(Cube.Positions.BOT).data[1][0] = Side.sideToColor(Cube.Positions.BOT);
         result.get(Cube.Positions.BOT).data[2][0] = Side.sideToColor(Cube.Positions.BOT);
-        result.get(Cube.Positions.OUTSIDE).data[0][0] = Side.sideToColor(Cube.Positions.OUTSIDE);
-        result.get(Cube.Positions.OUTSIDE).data[0][1] = Side.sideToColor(Cube.Positions.LEFT);
-        result.get(Cube.Positions.OUTSIDE).data[0][2] = Side.sideToColor(Cube.Positions.OUTSIDE);
-        result.get(Cube.Positions.OUTSIDE).data[1][0] = Side.sideToColor(Cube.Positions.OUTSIDE);
-        result.get(Cube.Positions.OUTSIDE).data[1][1] = Side.sideToColor(Cube.Positions.OUTSIDE);
-        result.get(Cube.Positions.OUTSIDE).data[1][2] = Side.sideToColor(Cube.Positions.OUTSIDE);
-        result.get(Cube.Positions.OUTSIDE).data[2][0] = Side.sideToColor(Cube.Positions.OUTSIDE);
-        result.get(Cube.Positions.OUTSIDE).data[2][1] = Side.sideToColor(Cube.Positions.BOT);
         result.get(Cube.Positions.OUTSIDE).data[2][2] = Side.sideToColor(Cube.Positions.OUTSIDE);
+        result.get(Cube.Positions.OUTSIDE).data[2][1] = Side.sideToColor(Cube.Positions.LEFT);
+        result.get(Cube.Positions.OUTSIDE).data[2][0] = Side.sideToColor(Cube.Positions.OUTSIDE);
+        result.get(Cube.Positions.OUTSIDE).data[1][2] = Side.sideToColor(Cube.Positions.OUTSIDE);
+        result.get(Cube.Positions.OUTSIDE).data[1][1] = Side.sideToColor(Cube.Positions.OUTSIDE);
+        result.get(Cube.Positions.OUTSIDE).data[1][0] = Side.sideToColor(Cube.Positions.OUTSIDE);
+        result.get(Cube.Positions.OUTSIDE).data[0][2] = Side.sideToColor(Cube.Positions.OUTSIDE);
+        result.get(Cube.Positions.OUTSIDE).data[0][1] = Side.sideToColor(Cube.Positions.BOT);
+        result.get(Cube.Positions.OUTSIDE).data[0][0] = Side.sideToColor(Cube.Positions.OUTSIDE);
 
         result.get(Cube.Positions.CENTER).data[0][0] = Side.sideToColor(Cube.Positions.CENTER);
         result.get(Cube.Positions.CENTER).data[0][1] = Side.sideToColor(Cube.Positions.CENTER);
