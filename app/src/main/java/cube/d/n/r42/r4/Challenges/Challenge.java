@@ -18,7 +18,7 @@ import cube.d.n.r42.r4.RFour;
  */
 public abstract class Challenge {
 
-    private static final String PREFS_NAME = "Challenge";
+    public static final String PREFS_NAME = "Challenge";
     public static HashMap<String, Challenge> challenges = new HashMap<String, Challenge>();
     static {
         Challenge t;
@@ -152,14 +152,16 @@ public abstract class Challenge {
     }
 
     public void solved() {
+
         if (!hasSolved()) {
-            RFour.getInstance().recordSolve(getSp_key());
+           RFour.getInstance().recordSolve(getSp_key());
             myActivity.solved();
+
+            SharedPreferences settings = RFour.getInstance().getSharedPreferences(PREFS_NAME, 0);
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putBoolean(getSolved(), true);
+            editor.commit();
         }
-        SharedPreferences settings = RFour.getInstance().getSharedPreferences(PREFS_NAME, 0);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean(getSolved(), true);
-        editor.commit();
     }
 
     public String getName() {

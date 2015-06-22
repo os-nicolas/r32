@@ -16,16 +16,16 @@
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:padding="4dp"
-                android:text="Manipulating the Dodecahedron:" android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Manipulating the Cube:" android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="24dp" />
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:padding="4dp"
-                android:text="You can only manipulate the face the camera is currently centered on (highlighted below). To turn one of its wheels, touch the row you want to spin and drag in the desired direction. Rubik's rhombic dodecahedrons are strange in that you always have to spin a wheel a multiple of two faces (more on this in the about section)." />
+                android:text="You can only manipulate the face the camera is currently centered on (highlighted below). To turn one of its wheels, touch the row you want to spin and drag in the desired direction." />
 
             <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:adjustViewBounds="true" android:scaleType="fitStart"
-                android:src="@drawable/clickcenter" />
+                android:src="@drawable/center" />
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:padding="4dp"
@@ -34,125 +34,22 @@
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:padding="4dp"
-                android:text="You can rotate the dodecahedron by dragging on any of the outside faces (highlighted below) in the desired direction." />
+                android:text="You can rotate the cube to look at a different face by dragging on any of the outside faces (highlighted below) in the desired direction." />
 
                 <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_weight="1" android:adjustViewBounds="true"
-                    android:scaleType="fitStart" android:src="@drawable/clickoutside" />
+                    android:scaleType="fitStart" android:src="@drawable/outside" />
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:padding="4dp"
-                android:text="About" android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Projection" android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="36dp" />
 
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:padding="4dp"
-                android:text="A rhombic dodecahedron is a twelve sided three dimensional shape. It differs from a regular dodecahedron because its sides are rhombuses, not pentagons. It looks something like this:" />
-
-            <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:adjustViewBounds="true" android:scaleType="fitStart"
-                android:src="@drawable/transpsmall" />
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:padding="4dp"
-                android:text="Or, without the transparency, like this:" />
+                android:text="For this app, we place the camera inside one of the sides of the cube facing inwards. We display the side the cube is embedded four times in around the outside aligned with each of the sides it touches. At first it's a little hard to look at, but once you get used to it, you'll find that being able to see all the sides is quite nice." />
 
-            <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:adjustViewBounds="true" android:scaleType="fitStart"
-                android:src="@drawable/solidsmall" />
-
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:padding="4dp"
-                android:text="It makes an interesting Rubik's cube because it can be rotated in four directions. A normal cube can only be rotated in three (x-plane, y-plane, z-plane). The rotations are shown below:" />
-
-            <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:adjustViewBounds="true"
-                    android:scaleType="fitStart" android:src="@drawable/spinismall" />
-
-                <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:adjustViewBounds="true"
-                    android:scaleType="fitStart" android:src="@drawable/spiniismall" />
-            </LinearLayout>
-
-            <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:adjustViewBounds="true"
-                    android:scaleType="fitStart" android:src="@drawable/spiniiismall" />
-
-                <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:adjustViewBounds="true"
-                    android:scaleType="fitStart" android:src="@drawable/spiniiiismall" />
-
-
-            </LinearLayout>
-
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:padding="4dp"
-                android:text="On a Rubik's Cube, you rotate a face; with this, you rotate three faces. You can see the three faces you would rotated around in some of the images above (in white on the top right and bottom right). This peculiarity means you cannot rotate by a single side. If you did, the three sides you are rotating around would be left askew. Thus, the restriction to turning wheels by a multiple of two faces" />
-
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:padding="4dp"
-                android:text="For this app, we unroll the dodecahedron so you can see all twelve sides at once. At first it's a little hard to look at, but once you get used to it, you'll find that being able to see all the sides is quite nice." />
-
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:padding="4dp" android:text="We unroll it like so:" />
-
-            <!--<LinearLayout-->
-            <!--android:orientation="horizontal"-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="wrap_content">-->
-
-            <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_weight="1" android:adjustViewBounds="true"
-                android:scaleType="fitStart" android:src="@drawable/flatsmall" />
-
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:padding="4dp"
-                android:text="Then squeeze it in to a rectangle, so it fits on the screen:" />
-
-            <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_weight="1" android:adjustViewBounds="true"
-                android:scaleType="fitStart" android:src="@drawable/normalflatsmall" />
-            <!--</LinearLayout>-->
-
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:padding="4dp"
-                android:text="I think about this as placing the camera inside one of the sides and looking inward, with the side the camera is in displayed around the outside" />
-
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:padding="4dp"
-                android:text="This projections also give us a good view of our four rotations" />
-
-            <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:adjustViewBounds="true"
-                    android:scaleType="fitStart" android:src="@drawable/spinflatismall" />
-
-                <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:adjustViewBounds="true"
-                    android:scaleType="fitStart" android:src="@drawable/spinflatiismall" />
-            </LinearLayout>
-
-            <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:adjustViewBounds="true"
-                    android:scaleType="fitStart" android:src="@drawable/spinflatiiismall" />
-
-                <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:adjustViewBounds="true"
-                    android:scaleType="fitStart" android:src="@drawable/spinflatiiiismall" />
-
-
-            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

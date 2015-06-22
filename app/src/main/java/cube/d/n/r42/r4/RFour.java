@@ -1,6 +1,7 @@
 package cube.d.n.r42.r4;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -18,7 +19,7 @@ import cube.d.n.r42.r4.Challenges.Challenge;
  * Created by Colin_000 on 4/9/2015.
  */
 public class RFour extends Application {
-    private static final String PROPERTY_ID = "UA-59613283-2";
+    private static final String PROPERTY_ID = "UA-59613283-4";
     private static RFour ourInstance;
     private AmazonDynamoDBClient ddbClient;
     private DynamoDBMapper mapper;
@@ -77,23 +78,45 @@ public class RFour extends Application {
                 } catch (Exception e) {
                 }
 
+                syncWithDB();
+
                 return null;
             }
         };
         asyncTask.execute();
     }
 
+    private void syncWithDB() {
+        SharedPreferences settings = RFour.getInstance().getSharedPreferences(Challenge.PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        for(Challenge c:Challenge.challenges.values()){
+           if (c.hasTried() &&  !settings.getBoolean(c.getSp_key() +"_try_uploaded", false)){
+               recordTry(c.getSp_key());
+           }
+           if (c.hasSolved() &&  !settings.getBoolean(c.getSp_key() +"_solve_uploaded", false)){
+               recordSolve(c.getSp_key());
+           }
+        }
+        editor.commit();
+    }
+
     public void recordTry(final String sp_key) {
         AsyncTask asyncTask = new AsyncTask() {
             @Override
             protected Object doInBackground(Object[] params) {
+                boolean pass = true;
                 try {
                     ChallengeMap mine = mapper.load(ChallengeMap.class, sp_key);
                     mine.setTrys(mine.getTrys() + 1);
                     mapper.save(mine);
                     Challenge.challenges.get(sp_key).setChallengeMap(mine);
                 } catch (Exception e) {
+                    pass = false;
                 }
+                SharedPreferences settings = RFour.getInstance().getSharedPreferences(Challenge.PREFS_NAME, 0);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putBoolean(sp_key +"_try_uploaded", pass);
+                editor.commit();
                 return null;
             }
         };
@@ -104,6 +127,7 @@ public class RFour extends Application {
         AsyncTask asyncTask = new AsyncTask() {
             @Override
             protected Object doInBackground(Object[] params) {
+                boolean pass = true;
                 try {
                     ChallengeMap mine = mapper.load(ChallengeMap.class, sp_key);
                     mine.setPasses(mine.getPasses() + 1);
@@ -111,7 +135,12 @@ public class RFour extends Application {
                     Challenge.challenges.get(sp_key).setChallengeMap(mine);
 
                 } catch (Exception e) {
+                    pass = false;
                 }
+                SharedPreferences settings = RFour.getInstance().getSharedPreferences(Challenge.PREFS_NAME, 0);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putBoolean(sp_key +"_solve_uploaded", pass);
+                editor.commit();
                 return null;
             }
         };

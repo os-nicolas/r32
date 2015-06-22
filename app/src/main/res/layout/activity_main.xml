@@ -32,6 +32,11 @@
                 <!--android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1"-->
                 <!--android:text="Reset" />-->
 
+            <com.xgc1986.ripplebutton.widget.RippleButton android:id="@+id/button_tutorial" android:layout_width="fill_parent"
+                android:layout_height="wrap_content"  android:text="Controls"
+                app:rippleColor="#bbbbbb"
+                app:buttonColor="#ffffff"
+                android:textColor="#000000"/>
 
             <com.xgc1986.ripplebutton.widget.RippleButton android:id="@+id/button_challenges" android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -53,11 +58,7 @@
                 app:buttonColor="#ffffff"
                 android:textColor="#000000"/>
 
-            <com.xgc1986.ripplebutton.widget.RippleButton android:id="@+id/button_tutorial" android:layout_width="fill_parent"
-                android:layout_height="wrap_content"  android:text="Help!!"
-                app:rippleColor="#bbbbbb"
-                app:buttonColor="#ffffff"
-                android:textColor="#000000"/>
+
 
         <!--<Button android:id="@+id/button_challenges" android:layout_width="fill_parent"-->
             <!--android:layout_height="wrap_content"-->

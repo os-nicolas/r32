@@ -2,6 +2,7 @@ package cube.d.n.r42.r4;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -135,6 +136,11 @@ public class ChallengeActivity extends Activity {
 
 
         int numTries = myChallenge.getTries();
+        SharedPreferences settings = RFour.getInstance().getSharedPreferences(Challenge.PREFS_NAME, 0);
+        if(settings.getBoolean(myChallenge.getSp_key() +"_try_uploaded", false)){
+            numTries--;
+        }
+
         if (numTries == -1) {
             line1.setText("");
         } else {
@@ -145,6 +151,9 @@ public class ChallengeActivity extends Activity {
             }
         }
         int numPassed = myChallenge.getPasses();
+        if(settings.getBoolean(myChallenge.getSp_key() +"_solve_uploaded", false)){
+            numPassed--;
+        }
         ;
         if (numTries == -1) {
             if (myChallenge.hasSolved()) {
@@ -161,12 +170,12 @@ public class ChallengeActivity extends Activity {
                 }
             } else {
                 if (myChallenge.hasSolved()) {
-                    if (numPassed == 2) {
-                        line2.setText("You and " + (numPassed - 1) + " other has completed it");
-                    } else if (numPassed == 1) {
+                    if (numPassed == 1) {
+                        line2.setText("You and " + (numPassed) + " other has completed it");
+                    } else if (numPassed == 0) {
                         line2.setText("Only you have solved it");
                     } else {
-                        line2.setText("You and " + (numPassed - 1) + " others have completed it");
+                        line2.setText("You and " + (numPassed) + " others have completed it");
                     }
                 } else {
                     if (numPassed == 1) {
