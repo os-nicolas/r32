@@ -18,7 +18,7 @@ public class Side {
             ,0xff0046ad // blue
             ,0xffffd500 // yellow
             ,0xffff5800 //orange
-            ,0xffAAAAAA
+            ,0xffd7daf1
     };
 
     public static int sideToColor(Cube.Positions pos){

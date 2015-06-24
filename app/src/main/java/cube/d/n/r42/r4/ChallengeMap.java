@@ -7,8 +7,8 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.*;import java.la
  */
 @DynamoDBTable(tableName = "Challenges")
 public class ChallengeMap {
-    private int passes = -1;
-    private int trys = -1;
+    private int passes = 0;
+    private int trys = 0;
     private String challenge = "";
 
     public ChallengeMap(String s) {

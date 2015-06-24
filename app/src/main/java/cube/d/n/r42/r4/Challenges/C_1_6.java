@@ -16,9 +16,9 @@ public class C_1_6 extends Challenge {
     protected Cube privateInitChallange() {
         Cube result = new Cube(2);
         result.rotateY(1, 0);
-        result.lookAtX(2);
+        result.lookAtX(1);
         result.rotateY(1, 0);
-        result.lookAtX(2);
+        result.lookAtX(1);
         result.rotateY(1, 0);
         return result;
     }

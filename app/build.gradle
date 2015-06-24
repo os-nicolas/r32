@@ -8,8 +8,8 @@ android {
         applicationId "cube.d.four.r3"
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 2
-        versionName "2"
+        versionCode 3
+        versionName "3"
     }
     buildTypes {
         release {

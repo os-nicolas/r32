@@ -154,13 +154,15 @@ public abstract class Challenge {
     public void solved() {
 
         if (!hasSolved()) {
-           RFour.getInstance().recordSolve(getSp_key());
-            myActivity.solved();
-
             SharedPreferences settings = RFour.getInstance().getSharedPreferences(PREFS_NAME, 0);
             SharedPreferences.Editor editor = settings.edit();
             editor.putBoolean(getSolved(), true);
             editor.commit();
+
+           RFour.getInstance().recordSolve(getSp_key());
+            myActivity.solved();
+
+
         }
     }
 
